@@ -244,19 +244,19 @@
         <!-- ========================================== -->
         <div id="tab-view-movements" class="max-w-xl mx-auto w-full space-y-4">
             
-            <!-- Barra Compacta de Saldo Disponible -->
+            <!-- Barra Compacta de Liquidez Real vs Deuda Tarjetas -->
             <div class="grid grid-cols-3 gap-2 sm:gap-4 bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-2xs">
                 <div class="border-r border-slate-100 pr-2">
-                    <span class="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-400">Balance</span>
+                    <span class="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-400">Liquidez Real</span>
                     <span id="mini-balance" class="text-sm sm:text-xl font-extrabold text-slate-900 truncate block">$0.00</span>
                 </div>
                 <div class="border-r border-slate-100 px-2">
-                    <span class="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-400">Ingresos</span>
-                    <span id="mini-income" class="text-sm sm:text-xl font-extrabold text-emerald-600 truncate block">$0.00</span>
+                    <span class="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-amber-600">Deuda Tarjeta</span>
+                    <span id="mini-credit-debt" class="text-sm sm:text-xl font-extrabold text-amber-600 truncate block">$0.00</span>
                 </div>
                 <div class="pl-2">
-                    <span class="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-400">Egresos</span>
-                    <span id="mini-expense" class="text-sm sm:text-xl font-extrabold text-rose-600 truncate block">$0.00</span>
+                    <span class="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-400">Ingresos</span>
+                    <span id="mini-income" class="text-sm sm:text-xl font-extrabold text-emerald-600 truncate block">$0.00</span>
                 </div>
             </div>
 
@@ -265,7 +265,7 @@
                 <div class="flex items-center justify-between mb-4">
                     <div>
                         <h2 id="form-title" class="text-base sm:text-lg font-bold text-slate-900">Anotar Movimiento</h2>
-                        <p id="form-subtitle" class="text-xs text-slate-500">Registra un ingreso o gasto al instante</p>
+                        <p id="form-subtitle" class="text-xs text-slate-500">Registra un ingreso, gasto o abono a tarjeta</p>
                     </div>
                     <button type="button" id="cancel-edit-btn" onclick="cancelEditMode()" class="hidden text-xs font-semibold text-rose-600 hover:bg-rose-50 px-3 py-1.5 rounded-xl border border-rose-200 transition-colors cursor-pointer">
                         Cancelar edición
@@ -276,14 +276,23 @@
                     <input type="hidden" id="edit-transaction-id" value="">
                     <input type="hidden" id="tx-type" value="expense">
 
-                    <!-- Selector Tipo -->
-                    <div class="grid grid-cols-2 gap-2 p-1 bg-slate-100 rounded-xl">
-                        <button type="button" id="btn-type-expense" onclick="setTransactionType('expense')" class="py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg bg-white text-rose-600 shadow-2xs transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                            <i data-lucide="minus-circle" class="w-4 h-4"></i> Egreso (-)
+                    <!-- Selector Tipo (3 opciones: Egreso, Ingreso, Pago Tarjeta) -->
+                    <div class="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 rounded-xl">
+                        <button type="button" id="btn-type-expense" onclick="setTransactionType('expense')" class="py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg bg-white text-rose-600 shadow-2xs transition-all flex items-center justify-center gap-1 cursor-pointer">
+                            <i data-lucide="minus-circle" class="w-4 h-4 shrink-0"></i> <span>Egreso</span>
                         </button>
-                        <button type="button" id="btn-type-income" onclick="setTransactionType('income')" class="py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                            <i data-lucide="plus-circle" class="w-4 h-4"></i> Ingreso (+)
+                        <button type="button" id="btn-type-income" onclick="setTransactionType('income')" class="py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1 cursor-pointer">
+                            <i data-lucide="plus-circle" class="w-4 h-4 shrink-0"></i> <span>Ingreso</span>
                         </button>
+                        <button type="button" id="btn-type-card_payment" onclick="setTransactionType('card_payment')" class="py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1 cursor-pointer">
+                            <i data-lucide="credit-card" class="w-4 h-4 shrink-0"></i> <span>Pagar TC</span>
+                        </button>
+                    </div>
+
+                    <!-- Aviso contextual inteligente según método/tipo -->
+                    <div id="tx-accounting-hint" class="px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 flex items-start gap-2">
+                        <i data-lucide="info" class="w-4 h-4 text-slate-500 shrink-0 mt-0.5"></i>
+                        <span id="tx-accounting-hint-text">El monto se descontará de tu <strong>Liquidez Real</strong> (Banco/Efectivo).</span>
                     </div>
 
                     <!-- Monto con botón de borrar campo -->
@@ -310,7 +319,7 @@
 
                     <!-- Categoría y Método de pago -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div>
+                        <div id="category-field-wrapper">
                             <div class="flex items-center justify-between mb-1.5">
                                 <label for="tx-category" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider">Categoría</label>
                                 <button type="button" onclick="toggleAddCategory()" class="text-xs font-semibold text-emerald-600 hover:text-emerald-700">+ Nueva</button>
@@ -323,9 +332,9 @@
                             </div>
                         </div>
 
-                        <div>
-                            <label for="tx-payment" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Método / Cuenta</label>
-                            <select id="tx-payment" required class="w-full px-3 py-2.5 min-h-[46px] bg-slate-50/70 border border-slate-200 rounded-xl text-sm text-slate-800 focus:bg-white focus:outline-hidden">
+                        <div id="payment-field-wrapper">
+                            <label for="tx-payment" id="tx-payment-label" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Método / Cuenta</label>
+                            <select id="tx-payment" onchange="updateAccountingHint()" required class="w-full px-3 py-2.5 min-h-[46px] bg-slate-50/70 border border-slate-200 rounded-xl text-sm text-slate-800 focus:bg-white focus:outline-hidden">
                                 <option value="Cuenta Bancaria">Cuenta Bancaria</option>
                                 <option value="Efectivo">Efectivo</option>
                                 <option value="Tarjeta de Débito">Tarjeta de Débito</option>
@@ -386,6 +395,7 @@
                             <option value="ALL">Todos los tipos</option>
                             <option value="income">Solo Ingresos (+)</option>
                             <option value="expense">Solo Egresos (-)</option>
+                            <option value="card_payment">Abonos / Pagos TC</option>
                         </select>
                         <select id="filter-category" onchange="renderTransactionsTable()" class="px-3 py-2.5 min-h-[42px] text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
                             <option value="ALL">Todas las categorías</option>
@@ -431,18 +441,32 @@
         <div id="tab-view-dashboard" class="hidden space-y-6">
             
             <!-- TARJETAS DE INDICADORES (KPIs) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <!-- Balance Neto -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <!-- Liquidez Real (Banco / Efectivo) -->
                 <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Balance Disponible</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Liquidez Real</span>
                         <div class="w-9 h-9 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center">
                             <i data-lucide="wallet" class="w-4 h-4"></i>
                         </div>
                     </div>
                     <div class="mt-3">
-                        <div id="kpi-balance" class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">$0.00</div>
-                        <p id="kpi-balance-note" class="text-xs text-slate-500 mt-1">Saldo neto del período</p>
+                        <div id="kpi-balance" class="text-2xl font-extrabold text-slate-900 tracking-tight">$0.00</div>
+                        <p id="kpi-balance-note" class="text-xs text-slate-500 mt-1">Banco + Efectivo disponible</p>
+                    </div>
+                </div>
+
+                <!-- Deuda Acumulada en Tarjetas de Crédito -->
+                <div class="bg-white p-5 rounded-2xl border border-amber-200/80 shadow-2xs flex flex-col justify-between">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-semibold uppercase tracking-wider text-amber-700">Deuda Tarjetas</span>
+                        <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+                            <i data-lucide="credit-card" class="w-4 h-4"></i>
+                        </div>
+                    </div>
+                    <div class="mt-3">
+                        <div id="kpi-credit-debt" class="text-2xl font-extrabold text-amber-600 tracking-tight">$0.00</div>
+                        <p id="kpi-credit-note" class="text-xs text-slate-500 mt-1">Por pagar al corte</p>
                     </div>
                 </div>
 
@@ -455,36 +479,36 @@
                         </div>
                     </div>
                     <div class="mt-3">
-                        <div id="kpi-income" class="text-2xl sm:text-3xl font-extrabold text-emerald-600 tracking-tight">$0.00</div>
+                        <div id="kpi-income" class="text-2xl font-extrabold text-emerald-600 tracking-tight">$0.00</div>
                         <p id="kpi-income-count" class="text-xs text-slate-500 mt-1">0 ingresos registrados</p>
                     </div>
                 </div>
 
-                <!-- Total Egresos -->
+                <!-- Total Consumo / Egresos -->
                 <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Egresos</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Consumo Total</span>
                         <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
                             <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
                         </div>
                     </div>
                     <div class="mt-3">
-                        <div id="kpi-expense" class="text-2xl sm:text-3xl font-extrabold text-rose-600 tracking-tight">$0.00</div>
-                        <p id="kpi-expense-count" class="text-xs text-slate-500 mt-1">0 egresos registrados</p>
+                        <div id="kpi-expense" class="text-2xl font-extrabold text-rose-600 tracking-tight">$0.00</div>
+                        <p id="kpi-expense-count" class="text-xs text-slate-500 mt-1">Efectivo + Tarjeta</p>
                     </div>
                 </div>
 
                 <!-- Tasa de Ahorro -->
                 <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Capacidad de Ahorro</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Ahorro Neto</span>
                         <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
                             <i data-lucide="piggy-bank" class="w-4 h-4"></i>
                         </div>
                     </div>
                     <div class="mt-3">
                         <div class="flex items-baseline gap-2">
-                            <span id="kpi-savings-rate" class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">0%</span>
+                            <span id="kpi-savings-rate" class="text-2xl font-extrabold text-slate-900 tracking-tight">0%</span>
                             <span id="kpi-savings-status" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Sin datos</span>
                         </div>
                         <div class="w-full bg-slate-100 h-2 rounded-full mt-2.5 overflow-hidden">
@@ -1186,15 +1210,67 @@
             document.getElementById('tx-type').value = type;
             const btnExp = document.getElementById('btn-type-expense');
             const btnInc = document.getElementById('btn-type-income');
+            const btnCard = document.getElementById('btn-type-card_payment');
+
+            const baseInactive = 'py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1 cursor-pointer';
+            btnExp.className = baseInactive;
+            btnInc.className = baseInactive;
+            btnCard.className = baseInactive;
+
+            const catWrapper = document.getElementById('category-field-wrapper');
+            const paySelect = document.getElementById('tx-payment');
+            const payLabel = document.getElementById('tx-payment-label');
+            const descInput = document.getElementById('tx-description');
 
             if (type === 'expense') {
-                btnExp.className = 'py-2.5 text-xs sm:text-sm font-bold rounded-lg bg-white text-rose-600 shadow-2xs transition-all flex items-center justify-center gap-1.5 cursor-pointer';
-                btnInc.className = 'py-2.5 text-xs sm:text-sm font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1.5 cursor-pointer';
-            } else {
-                btnInc.className = 'py-2.5 text-xs sm:text-sm font-bold rounded-lg bg-white text-emerald-600 shadow-2xs transition-all flex items-center justify-center gap-1.5 cursor-pointer';
-                btnExp.className = 'py-2.5 text-xs sm:text-sm font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1.5 cursor-pointer';
+                btnExp.className = 'py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg bg-white text-rose-600 shadow-2xs transition-all flex items-center justify-center gap-1 cursor-pointer';
+                catWrapper.classList.remove('hidden');
+                payLabel.textContent = 'Método / Cuenta';
+                Array.from(paySelect.options).forEach(opt => { opt.hidden = false; });
+                descInput.placeholder = 'Ej. Supermercado, Gasolina, Cena...';
+                populateCategoryDropdowns();
+            } else if (type === 'income') {
+                btnInc.className = 'py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg bg-white text-emerald-600 shadow-2xs transition-all flex items-center justify-center gap-1 cursor-pointer';
+                catWrapper.classList.remove('hidden');
+                payLabel.textContent = 'Cuenta Destino';
+                Array.from(paySelect.options).forEach(opt => {
+                    opt.hidden = opt.value === 'Tarjeta de Crédito';
+                });
+                if (paySelect.value === 'Tarjeta de Crédito') paySelect.value = 'Cuenta Bancaria';
+                descInput.placeholder = 'Ej. Sueldo quincenal, Honorarios, Venta...';
+                populateCategoryDropdowns();
+            } else if (type === 'card_payment') {
+                btnCard.className = 'py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg bg-white text-indigo-600 shadow-2xs transition-all flex items-center justify-center gap-1 cursor-pointer';
+                catWrapper.classList.add('hidden');
+                payLabel.textContent = 'Pagado desde';
+                Array.from(paySelect.options).forEach(opt => {
+                    opt.hidden = opt.value === 'Tarjeta de Crédito';
+                });
+                if (paySelect.value === 'Tarjeta de Crédito') paySelect.value = 'Cuenta Bancaria';
+                if (!descInput.value) descInput.value = 'Pago Tarjeta de Crédito';
             }
-            populateCategoryDropdowns();
+            updateAccountingHint();
+        }
+
+        function updateAccountingHint() {
+            const type = document.getElementById('tx-type').value;
+            const payment = document.getElementById('tx-payment').value;
+            const hintBox = document.getElementById('tx-accounting-hint');
+            const hintText = document.getElementById('tx-accounting-hint-text');
+
+            if (type === 'card_payment') {
+                hintBox.className = 'px-3.5 py-2.5 rounded-xl bg-indigo-50/80 border border-indigo-200/80 text-xs text-indigo-900 flex items-start gap-2';
+                hintText.innerHTML = '<strong>Abono a Tarjeta:</strong> Descuenta de tu <strong>Liquidez Real</strong> y reduce tu <strong>Deuda de Tarjeta</strong> sin duplicar el gasto.';
+            } else if (type === 'expense' && payment === 'Tarjeta de Crédito') {
+                hintBox.className = 'px-3.5 py-2.5 rounded-xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 flex items-start gap-2';
+                hintText.innerHTML = '<strong>Compra con Tarjeta:</strong> Se registra en tus estadísticas de gasto y suma a <strong>Deuda Tarjeta</strong> sin restar hoy de tu dinero en banco.';
+            } else if (type === 'income') {
+                hintBox.className = 'px-3.5 py-2.5 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-xs text-emerald-900 flex items-start gap-2';
+                hintText.innerHTML = '<strong>Ingreso líquido:</strong> Suma directamente a tu <strong>Liquidez Real</strong> disponible.';
+            } else {
+                hintBox.className = 'px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 flex items-start gap-2';
+                hintText.innerHTML = '<strong>Gasto inmediato:</strong> El monto se descontará directamente de tu <strong>Liquidez Real</strong> (Banco/Efectivo).';
+            }
         }
 
         function populateCategoryDropdowns() {
@@ -1202,8 +1278,9 @@
             const txCatSelect = document.getElementById('tx-category');
             const currentCat = txCatSelect.value;
 
-            txCatSelect.innerHTML = (categories[type] || []).map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
-            if (categories[type]?.includes(currentCat)) {
+            const targetType = type === 'income' ? 'income' : 'expense';
+            txCatSelect.innerHTML = (categories[targetType] || []).map(c => `<option value="${escapeHTML(c)}">${escapeHTML(c)}</option>`).join('');
+            if (categories[targetType]?.includes(currentCat)) {
                 txCatSelect.value = currentCat;
             }
 
@@ -1272,7 +1349,7 @@
             const type = document.getElementById('tx-type').value;
             const amount = parseDecimalAmount(document.getElementById('tx-amount').value);
             const description = document.getElementById('tx-description').value.trim();
-            const category = document.getElementById('tx-category').value;
+            const category = type === 'card_payment' ? 'Pago Tarjeta de Crédito' : document.getElementById('tx-category').value;
             const payment = document.getElementById('tx-payment').value;
             const date = document.getElementById('tx-date').value;
             const note = document.getElementById('tx-note').value.trim();
@@ -1301,7 +1378,12 @@
                     note
                 });
                 resetFormFields();
-                showToast(type === 'income' ? 'Ingreso guardado' : 'Egreso guardado', 'success');
+                const toastMsg = type === 'income'
+                    ? 'Ingreso sumado a tu liquidez real'
+                    : (type === 'card_payment'
+                        ? 'Abono registrado: deuda de tarjeta reducida'
+                        : (payment === 'Tarjeta de Crédito' ? 'Compra sumada a deuda de tarjeta' : 'Egreso descontado de liquidez'));
+                showToast(toastMsg, 'success');
             }
 
             saveToStorage();
@@ -1408,46 +1490,71 @@
         function updateKPIs(txList) {
             let totalIncome = 0;
             let incomeCount = 0;
-            let totalExpense = 0;
+            let totalConsumption = 0;
             let expenseCount = 0;
+            let liquidOutflows = 0;
+            let creditCardCharges = 0;
+            let creditCardPayments = 0;
 
             txList.forEach(t => {
+                const amt = Number(t.amount || 0);
                 if (t.type === 'income') {
-                    totalIncome += Number(t.amount || 0);
+                    totalIncome += amt;
                     incomeCount++;
+                } else if (t.type === 'card_payment') {
+                    // Abono a tarjeta: sale del banco/efectivo y reduce deuda de tarjeta (no duplica consumo)
+                    liquidOutflows += amt;
+                    creditCardPayments += amt;
                 } else {
-                    totalExpense += Number(t.amount || 0);
+                    // Egreso / Consumo
+                    totalConsumption += amt;
                     expenseCount++;
+                    if (t.payment === 'Tarjeta de Crédito') {
+                        creditCardCharges += amt;
+                    } else {
+                        liquidOutflows += amt;
+                    }
                 }
             });
 
-            const balance = totalIncome - totalExpense;
+            const liquidBalance = totalIncome - liquidOutflows;
+            const creditDebt = Math.max(0, creditCardCharges - creditCardPayments);
+
             const balanceEl = document.getElementById('kpi-balance');
-            balanceEl.textContent = formatCurrency(balance);
-            balanceEl.className = `text-2xl sm:text-3xl font-extrabold tracking-tight ${balance >= 0 ? 'text-slate-900' : 'text-rose-600'}`;
+            balanceEl.textContent = formatCurrency(liquidBalance);
+            balanceEl.className = `text-2xl font-extrabold tracking-tight ${liquidBalance >= 0 ? 'text-slate-900' : 'text-rose-600'}`;
+
+            const debtEl = document.getElementById('kpi-credit-debt');
+            if (debtEl) debtEl.textContent = formatCurrency(creditDebt);
+            const debtNoteEl = document.getElementById('kpi-credit-note');
+            if (debtNoteEl) {
+                debtNoteEl.textContent = creditCardPayments > 0
+                    ? `Abonado: ${formatCurrency(creditCardPayments)}`
+                    : 'Acumulado por pagar';
+            }
 
             const miniBalanceEl = document.getElementById('mini-balance');
             if (miniBalanceEl) {
-                miniBalanceEl.textContent = formatCurrency(balance);
-                miniBalanceEl.className = `text-sm sm:text-xl font-extrabold ${balance >= 0 ? 'text-slate-900' : 'text-rose-600'}`;
+                miniBalanceEl.textContent = formatCurrency(liquidBalance);
+                miniBalanceEl.className = `text-sm sm:text-xl font-extrabold truncate block ${liquidBalance >= 0 ? 'text-slate-900' : 'text-rose-600'}`;
             }
+            const miniDebtEl = document.getElementById('mini-credit-debt');
+            if (miniDebtEl) miniDebtEl.textContent = formatCurrency(creditDebt);
             const miniIncomeEl = document.getElementById('mini-income');
             if (miniIncomeEl) miniIncomeEl.textContent = formatCurrency(totalIncome);
-            const miniExpenseEl = document.getElementById('mini-expense');
-            if (miniExpenseEl) miniExpenseEl.textContent = formatCurrency(totalExpense);
 
             document.getElementById('kpi-income').textContent = formatCurrency(totalIncome);
             document.getElementById('kpi-income-count').textContent = `${incomeCount} ${incomeCount === 1 ? 'ingreso' : 'ingresos'}`;
 
-            document.getElementById('kpi-expense').textContent = formatCurrency(totalExpense);
-            document.getElementById('kpi-expense-count').textContent = `${expenseCount} ${expenseCount === 1 ? 'egreso' : 'egresos'}`;
+            document.getElementById('kpi-expense').textContent = formatCurrency(totalConsumption);
+            document.getElementById('kpi-expense-count').textContent = `${expenseCount} ${expenseCount === 1 ? 'compra/gasto' : 'compras/gastos'}`;
 
             const savingsRateEl = document.getElementById('kpi-savings-rate');
             const savingsStatusEl = document.getElementById('kpi-savings-status');
             const savingsBarEl = document.getElementById('kpi-savings-bar');
 
             if (totalIncome > 0) {
-                const rate = Math.round(((totalIncome - totalExpense) / totalIncome) * 100);
+                const rate = Math.round(((totalIncome - totalConsumption) / totalIncome) * 100);
                 const clamped = Math.max(0, Math.min(100, rate));
                 savingsRateEl.textContent = `${rate}%`;
                 savingsBarEl.style.width = `${clamped}%`;
@@ -1474,10 +1581,11 @@
         }
 
         function renderCharts(txList) {
-            // 1. Gráfico de Flujo Diario
+            // 1. Gráfico de Flujo Diario (Ingresos vs Consumo real, sin duplicar pagos de TC)
             const dailyMap = {};
             const sorted = [...txList].sort((a, b) => new Date(a.date) - new Date(b.date));
             sorted.forEach(t => {
+                if (t.type === 'card_payment') return;
                 const dayKey = (t.date || '').slice(0, 10) || 'Sin fecha';
                 if (!dailyMap[dayKey]) dailyMap[dayKey] = { income: 0, expense: 0 };
                 dailyMap[dayKey][t.type] += Number(t.amount || 0);
@@ -1637,8 +1745,11 @@
             if (mobileList) {
                 mobileList.innerHTML = filtered.map(tx => {
                     const isIncome = tx.type === 'income';
-                    const sign = isIncome ? '+' : '-';
-                    const amountClass = isIncome ? 'font-extrabold text-emerald-600' : 'font-extrabold text-rose-600';
+                    const isCardPay = tx.type === 'card_payment';
+                    const sign = isIncome ? '+' : (isCardPay ? '⇄ ' : '-');
+                    const amountClass = isIncome
+                        ? 'font-extrabold text-emerald-600'
+                        : (isCardPay ? 'font-extrabold text-indigo-600' : (tx.payment === 'Tarjeta de Crédito' ? 'font-extrabold text-amber-600' : 'font-extrabold text-rose-600'));
                     const dateFormatted = formatDisplayDate(tx.date);
 
                     return `
@@ -1671,8 +1782,11 @@
             // Renderizar tabla completa para Tablet/Laptop
             tbody.innerHTML = filtered.map(tx => {
                 const isIncome = tx.type === 'income';
-                const sign = isIncome ? '+' : '-';
-                const amountClass = isIncome ? 'font-extrabold text-emerald-600' : 'font-extrabold text-rose-600';
+                const isCardPay = tx.type === 'card_payment';
+                const sign = isIncome ? '+' : (isCardPay ? '⇄ ' : '-');
+                const amountClass = isIncome
+                    ? 'font-extrabold text-emerald-600'
+                    : (isCardPay ? 'font-extrabold text-indigo-600' : (tx.payment === 'Tarjeta de Crédito' ? 'font-extrabold text-amber-600' : 'font-extrabold text-rose-600'));
                 const dateFormatted = formatDisplayDate(tx.date);
 
                 return `
@@ -2340,9 +2454,10 @@ Devuelve un análisis práctico en español con:
                 { id: 'demo_1', type: 'income', amount: 1850.00, description: 'Sueldo Mensual / Rol de Pagos', category: 'Sueldo / Rol de Pagos', payment: 'Cuenta Bancaria', date: fmtOffset(6), note: 'Depósito nómina' },
                 { id: 'demo_2', type: 'expense', amount: 420.00, description: 'Arriendo y Alícuota', category: 'Vivienda y Servicios', payment: 'Transferencia', date: fmtOffset(5), note: 'Pago mensual' },
                 { id: 'demo_3', type: 'expense', amount: 135.50, description: 'Compras Supermercado', category: 'Alimentación', payment: 'Tarjeta de Débito', date: fmtOffset(4), note: 'Despensa semanal' },
-                { id: 'demo_4', type: 'expense', amount: 210.00, description: 'Abono Estado de Cuenta Visa', category: 'Tarjeta de Crédito', payment: 'Cuenta Bancaria', date: fmtOffset(2), note: 'Pago corriente sin intereses' },
-                { id: 'demo_5', type: 'income', amount: 240.00, description: 'Consultoría / Ingreso Extra', category: 'Servicios Profesionales', payment: 'Transferencia', date: fmtOffset(1), note: 'Proyecto adicional' },
-                { id: 'demo_6', type: 'expense', amount: 45.00, description: 'Combustible y Peajes', category: 'Transporte y Gasolina', payment: 'Tarjeta de Crédito', date: fmtOffset(0), note: '' }
+                { id: 'demo_4', type: 'expense', amount: 260.00, description: 'Compras y Suscripciones Visa', category: 'Compras Personales', payment: 'Tarjeta de Crédito', date: fmtOffset(3), note: 'Acumula deuda TC' },
+                { id: 'demo_5', type: 'card_payment', amount: 150.00, description: 'Abono Estado de Cuenta Visa', category: 'Pago Tarjeta de Crédito', payment: 'Cuenta Bancaria', date: fmtOffset(2), note: 'Reduce deuda TC sin duplicar gasto' },
+                { id: 'demo_6', type: 'income', amount: 240.00, description: 'Consultoría / Ingreso Extra', category: 'Servicios Profesionales', payment: 'Transferencia', date: fmtOffset(1), note: 'Proyecto adicional' },
+                { id: 'demo_7', type: 'expense', amount: 45.00, description: 'Combustible y Peajes', category: 'Transporte y Gasolina', payment: 'Tarjeta de Crédito', date: fmtOffset(0), note: 'Pendiente de pago al corte' }
             ];
         }
     </script>
