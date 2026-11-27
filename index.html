@@ -144,57 +144,57 @@
                     <!-- Botón Asesor IA & Docs -->
                     <button onclick="openAiAdvisorModal()" class="flex items-center gap-1.5 px-3.5 py-2 min-h-[40px] bg-indigo-600 hover:bg-indigo-700 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-xs transition-all cursor-pointer">
                         <i data-lucide="sparkles" class="w-4 h-4"></i>
-                        <span>Asesor IA & Docs</span>
-                    </button>
-
-                    <!-- Botón Seguridad PIN -->
-                    <button onclick="openSecurityModal()" id="security-header-btn" class="flex items-center gap-1.5 px-3 py-2 min-h-[40px] bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-medium rounded-xl transition-colors cursor-pointer" title="Seguridad y PIN">
-                        <i data-lucide="lock" class="w-4 h-4 text-slate-500"></i>
-                        <span class="hidden md:inline" id="security-btn-label">PIN Seguridad</span>
-                    </button>
-
-                    <!-- Botón Instalar en iPhone -->
-                    <button onclick="openPwaModal()" class="flex items-center gap-1.5 px-3 py-2 min-h-[40px] bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 text-xs sm:text-sm font-medium rounded-xl transition-colors cursor-pointer">
-                        <i data-lucide="smartphone" class="w-4 h-4 text-emerald-600"></i>
-                        <span class="hidden sm:inline">iPhone App</span>
-                    </button>
-
-                    <!-- Menú Datos & Respaldo -->
-                    <div class="relative" id="data-menu-container">
-                        <button onclick="toggleDataMenu()" class="flex items-center gap-1.5 px-3 py-2 min-h-[40px] bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-medium rounded-xl transition-colors cursor-pointer">
-                            <i data-lucide="database" class="w-4 h-4 text-emerald-400"></i>
-                            <span class="hidden sm:inline">Datos & Respaldo</span>
-                            <i data-lucide="chevron-down" class="w-3.5 h-3.5 text-slate-400"></i>
-                        </button>
-
-                        <div id="data-dropdown" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-2xl shadow-xl border border-slate-200/90 py-2 z-50">
-                            <div class="px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400">Pruebas y Control</div>
-                            <button onclick="loadDemoData(); toggleDataMenu();" class="w-full text-left px-4 py-2.5 text-xs sm:text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5">
-                                <i data-lucide="wand-2" class="w-4 h-4 text-indigo-600"></i>
-                                Cargar datos de ejemplo
-                            </button>
-                            <button onclick="confirmClearAll(); toggleDataMenu();" class="w-full text-left px-4 py-2.5 text-xs sm:text-sm text-rose-600 hover:bg-rose-50/70 flex items-center gap-2.5">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                                Borrar todo (empezar en $0)
-                            </button>
-
-                            <div class="my-1.5 border-t border-slate-100"></div>
-                            <div class="px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-wider text-slate-400">Sincronización & Copias</div>
-                            
-                            <button onclick="exportCSV(); toggleDataMenu();" class="w-full text-left px-4 py-2.5 text-xs sm:text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5">
-                                <i data-lucide="file-spreadsheet" class="w-4 h-4 text-emerald-600"></i>
-                                Exportar a Excel (CSV)
-                            </button>
-                            <button onclick="exportJSON(); toggleDataMenu();" class="w-full text-left px-4 py-2.5 text-xs sm:text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5">
-                                <i data-lucide="download" class="w-4 h-4 text-slate-600"></i>
-                                Descargar respaldo JSON
-                            </button>
-                            <label class="w-full text-left px-4 py-2.5 text-xs sm:text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 cursor-pointer">
-                                <i data-lucide="upload" class="w-4 h-4 text-indigo-600"></i>
-                                Importar respaldo JSON
-                                <input type="file" id="import-json-file" accept=".json" class="hidden" onchange="importJSON(event); toggleDataMenu();">
-                            </label>
+            <!-- Tarjeta de Próximos Pagos (Tarjetas y Préstamos) -->
+            <div class="bg-amber-50/90 border border-amber-200/90 rounded-2xl p-3.5 sm:p-4 space-y-3 shadow-2xs">
+                <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
+                            <i data-lucide="calendar-clock" class="w-4 h-4"></i>
                         </div>
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <h3 class="text-xs sm:text-sm font-bold text-amber-950">Próximos Pagos: Tarjetas y Préstamos</h3>
+                                <span id="scheduled-cards-total-badge" class="hidden text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-amber-200/80 text-amber-950">$0.00</span>
+                            </div>
+                            <p class="text-[11px] text-amber-800/80">Programa facturas de tarjetas o cuotas de préstamos antes de pagarlas</p>
+                        </div>
+                    </div>
+                    <button type="button" onclick="openScheduledCardForm()" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-2xs flex items-center gap-1 shrink-0 cursor-pointer">
+                        <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                        <span>Agregar</span>
+                    </button>
+                </div>
+
+                <!-- Lista de tarjetas y préstamos programados -->
+                <div id="scheduled-cards-list" class="space-y-2"></div>
+
+                <!-- Formulario rápido para agregar o editar tarjeta / préstamo -->
+                <div id="scheduled-card-form" class="hidden pt-2 border-t border-amber-200/80 space-y-2.5">
+                    <input type="hidden" id="sched-card-edit-id">
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-2">
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-amber-900 mb-1">Tipo</label>
+                            <select id="sched-card-kind" class="w-full px-2.5 py-2 bg-white border border-amber-300 rounded-xl text-xs font-bold text-slate-900">
+                                <option value="card">Tarjeta de Crédito</option>
+                                <option value="loan">Préstamo / Cuota</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-amber-900 mb-1">Entidad / Nombre</label>
+                            <input type="text" id="sched-card-name" placeholder="Ej. Visa / Préstamo Coop." class="w-full px-3 py-2 bg-white border border-amber-300 rounded-xl text-xs font-semibold text-slate-900">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-amber-900 mb-1">Monto cuota ($)</label>
+                            <input type="text" id="sched-card-amount" inputmode="decimal" oninput="sanitizeDecimalInput(this)" placeholder="250,00" class="w-full px-3 py-2 bg-white border border-amber-300 rounded-xl text-xs font-extrabold text-slate-900">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold uppercase text-amber-900 mb-1">Fecha límite</label>
+                            <input type="date" id="sched-card-date" class="w-full px-3 py-2 bg-white border border-amber-300 rounded-xl text-xs font-semibold text-slate-900">
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end gap-2">
+                        <button type="button" onclick="closeScheduledCardForm()" class="py-1.5 px-3 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 text-xs font-semibold rounded-xl cursor-pointer">Cancelar</button>
+                        <button type="button" onclick="saveScheduledCard()" class="py-1.5 px-3.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl cursor-pointer">Guardar Obligación</button>
                     </div>
                 </div>
             </div>
@@ -261,25 +261,73 @@
                 <div class="pt-1 sm:pt-0 sm:pl-2">
                     <span class="block text-[10px] font-bold uppercase tracking-wider text-amber-600">Consumos TC Mes</span>
                     <span id="mini-credit-debt" class="text-base sm:text-lg font-extrabold text-amber-600 truncate block">$0.00</span>
+                    <button type="button" id="quick-pay-tc-month-btn" onclick="openPayMonthlyTcModal()" class="hidden mt-1 w-full py-1 px-2 bg-amber-100 hover:bg-amber-200 text-amber-900 text-[10px] font-bold rounded-lg transition-colors flex items-center justify-center gap-1 cursor-pointer">
+                        <i data-lucide="check-circle" class="w-3 h-3"></i>
+                        <span>Abonar / Pagar</span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Tarjeta Amigable: Próximo Pago de Tarjeta Programado (Obligación por pagar) -->
-            <div class="bg-amber-50/70 border border-amber-200/90 rounded-2xl p-3.5 sm:p-4 space-y-3">
+            <!-- Modal/Tarjeta Desplegable Rápida para Pagar Consumos TC Mes -->
+            <div id="pay-monthly-tc-box" class="hidden bg-indigo-50/90 border border-indigo-200 rounded-2xl p-3.5 sm:p-4 space-y-3 shadow-2xs">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <div class="w-8 h-8 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center shrink-0">
+                            <i data-lucide="credit-card" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xs sm:text-sm font-bold text-indigo-950">Pagar Consumos TC del Mes</h3>
+                            <p class="text-[11px] text-indigo-800/80">Se descontará de tu Liquidez Real y rebajará tus Consumos TC Mes</p>
+                        </div>
+                    </div>
+                    <button type="button" onclick="closePayMonthlyTcModal()" class="p-1 text-indigo-400 hover:text-indigo-700 rounded-lg">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-indigo-900 mb-1">Monto a abonar ($)</label>
+                        <input type="text" id="monthly-tc-pay-amount" inputmode="decimal" oninput="sanitizeDecimalInput(this)"
+                            class="w-full px-3 py-2 bg-white border border-indigo-300 rounded-xl text-sm font-extrabold text-slate-900">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-indigo-900 mb-1">Pagar desde cuenta</label>
+                        <select id="monthly-tc-pay-account" class="w-full px-3 py-2 bg-white border border-indigo-300 rounded-xl text-xs sm:text-sm font-semibold text-slate-800">
+                            <option value="Cuenta Bancaria">Cuenta Bancaria</option>
+                            <option value="Efectivo">Efectivo</option>
+                            <option value="Transferencia">Transferencia</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-2">
+                    <button type="button" onclick="closePayMonthlyTcModal()" class="py-1.5 px-3 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 text-xs font-semibold rounded-xl cursor-pointer">
+                        Cancelar
+                    </button>
+                    <button type="button" onclick="confirmPayMonthlyTc()" class="py-2 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold rounded-xl shadow-2xs flex items-center gap-1.5 cursor-pointer">
+                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                        <span>Confirmar Pago TC</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tarjeta de Próximos Pagos de Tarjetas (Múltiples Tarjetas) -->
+            <div class="bg-amber-50/90 border border-amber-200/90 rounded-2xl p-3.5 sm:p-4 space-y-3 shadow-2xs">
                 <div class="flex items-center justify-between gap-2">
-                    <div class="flex items-center gap-2.5">
+                    <div class="flex items-center gap-2">
                         <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0">
                             <i data-lucide="calendar-clock" class="w-4 h-4"></i>
                         </div>
                         <div>
                             <div class="flex items-center gap-2 flex-wrap">
-                                <span class="text-xs sm:text-sm font-bold text-amber-950">Próximos Pagos de Tarjetas</span>
-                                <span id="scheduled-cards-total-badge" class="hidden text-[11px] font-bold px-2 py-0.5 rounded-full bg-amber-200/90 text-amber-950">Total: $0.00</span>
+                                <h3 class="text-xs sm:text-sm font-bold text-amber-950">Próximos Pagos de Tarjetas</h3>
+                                <span id="scheduled-cards-total-badge" class="hidden text-[11px] font-extrabold px-2 py-0.5 rounded-full bg-amber-200/80 text-amber-950">$0.00</span>
                             </div>
-                            <p class="text-[11px] text-amber-800/80">Programa tus tarjetas por pagar sin descontar aún de tu banco</p>
+                            <p class="text-[11px] text-amber-800/80">Anota tus facturas o cortes ya emitidos sin restar aún de tu banco</p>
                         </div>
                     </div>
-                    <button type="button" onclick="openScheduledCardForm()" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-2xs transition-colors flex items-center gap-1 shrink-0 cursor-pointer">
+                    <button type="button" onclick="openScheduledCardForm()" class="px-3 py-1.5 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-2xs flex items-center gap-1 shrink-0 cursor-pointer">
                         <i data-lucide="plus" class="w-3.5 h-3.5"></i>
                         <span>Agregar Tarjeta</span>
                     </button>
@@ -288,45 +336,38 @@
                 <!-- Lista de tarjetas programadas -->
                 <div id="scheduled-cards-list" class="space-y-2"></div>
 
-                <!-- Formulario desplegable para agregar / editar una tarjeta por pagar -->
-                <div id="upcoming-card-editor" class="hidden pt-3 border-t border-amber-200/80 space-y-2.5">
-                    <input type="hidden" id="editing-scheduled-card-id" value="">
+                <!-- Formulario rápido para agregar o editar una tarjeta -->
+                <div id="scheduled-card-form" class="hidden pt-2 border-t border-amber-200/80 space-y-2.5">
+                    <input type="hidden" id="sched-card-edit-id">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <div>
-                            <label class="block text-[10px] font-bold uppercase text-amber-900 mb-1">Nombre Tarjeta</label>
-                            <input type="text" id="scheduled-card-name" placeholder="Ej. Visa, Diners..."
-                                class="w-full px-2.5 py-2 bg-white border border-amber-300 rounded-xl text-xs font-semibold text-slate-900">
+                            <label class="block text-[10px] font-bold uppercase text-amber-900 mb-1">Tarjeta / Banco</label>
+                            <input type="text" id="sched-card-name" placeholder="Ej. Visa Pichincha" class="w-full px-3 py-2 bg-white border border-amber-300 rounded-xl text-xs font-semibold text-slate-900">
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold uppercase text-amber-900 mb-1">Monto a pagar ($)</label>
-                            <input type="text" id="scheduled-card-amount" inputmode="decimal" oninput="sanitizeDecimalInput(this)" placeholder="Ej. 320,00"
-                                class="w-full px-2.5 py-2 bg-white border border-amber-300 rounded-xl text-xs font-bold text-slate-900">
+                            <input type="text" id="sched-card-amount" inputmode="decimal" oninput="sanitizeDecimalInput(this)" placeholder="320,00" class="w-full px-3 py-2 bg-white border border-amber-300 rounded-xl text-xs font-extrabold text-slate-900">
                         </div>
                         <div>
                             <label class="block text-[10px] font-bold uppercase text-amber-900 mb-1">Fecha límite</label>
-                            <input type="date" id="scheduled-card-date"
-                                class="w-full px-2.5 py-2 bg-white border border-amber-300 rounded-xl text-xs font-semibold text-slate-900">
+                            <input type="date" id="sched-card-date" class="w-full px-3 py-2 bg-white border border-amber-300 rounded-xl text-xs font-semibold text-slate-900">
                         </div>
                     </div>
                     <div class="flex items-center justify-end gap-2">
-                        <button type="button" onclick="closeScheduledCardEditor()" class="py-1.5 px-3 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 text-xs font-semibold rounded-xl cursor-pointer">
-                            Cancelar
-                        </button>
-                        <button type="button" onclick="saveScheduledCardReminder()" class="py-1.5 px-4 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl cursor-pointer">
-                            Guardar Tarjeta
-                        </button>
+                        <button type="button" onclick="closeScheduledCardForm()" class="py-1.5 px-3 bg-white hover:bg-slate-100 text-slate-600 border border-slate-200 text-xs font-semibold rounded-xl cursor-pointer">Cancelar</button>
+                        <button type="button" onclick="saveScheduledCard()" class="py-1.5 px-3.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl cursor-pointer">Guardar Tarjeta</button>
                     </div>
                 </div>
             </div>
 
-            <!-- FORMULARIO DE REGISTRO / EDICIÓN -->
-            <div id="form-card" class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-2xs">
+            <!-- Formulario Principal de Registro / Edición -->
+            <div id="form-card" class="bg-white p-4 sm:p-6 rounded-2xl border border-slate-200/80 shadow-2xs transition-all">
                 <div class="flex items-center justify-between mb-4">
                     <div>
                         <h2 id="form-title" class="text-base sm:text-lg font-bold text-slate-900">Anotar Movimiento</h2>
-                        <p id="form-subtitle" class="text-xs text-slate-500">Registra un ingreso, gasto o abono a tarjeta</p>
+                        <p id="form-subtitle" class="text-xs text-slate-500">Registra un ingreso o gasto al instante</p>
                     </div>
-                    <button type="button" id="cancel-edit-btn" onclick="cancelEditMode()" class="hidden text-xs font-semibold text-rose-600 hover:bg-rose-50 px-3 py-1.5 rounded-xl border border-rose-200 transition-colors cursor-pointer">
+                    <button type="button" id="cancel-edit-btn" onclick="cancelEditMode()" class="hidden text-xs font-bold text-rose-600 hover:bg-rose-50 px-2.5 py-1.5 rounded-lg transition-colors cursor-pointer">
                         Cancelar edición
                     </button>
                 </div>
@@ -335,65 +376,68 @@
                     <input type="hidden" id="edit-transaction-id" value="">
                     <input type="hidden" id="tx-type" value="expense">
 
-                    <!-- Selector Tipo (3 opciones: Egreso, Ingreso, Pago Tarjeta) -->
+                    <!-- Selector de Tipo (3 botones táctiles) -->
                     <div class="grid grid-cols-3 gap-1.5 p-1 bg-slate-100 rounded-xl">
                         <button type="button" id="btn-type-expense" onclick="setTransactionType('expense')" class="py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg bg-white text-rose-600 shadow-2xs transition-all flex items-center justify-center gap-1 cursor-pointer">
-                            <i data-lucide="minus-circle" class="w-4 h-4 shrink-0"></i> <span>Egreso</span>
+                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                            <span>Egreso</span>
                         </button>
                         <button type="button" id="btn-type-income" onclick="setTransactionType('income')" class="py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1 cursor-pointer">
-                            <i data-lucide="plus-circle" class="w-4 h-4 shrink-0"></i> <span>Ingreso</span>
+                            <i data-lucide="arrow-down-left" class="w-4 h-4"></i>
+                            <span>Ingreso</span>
                         </button>
                         <button type="button" id="btn-type-card_payment" onclick="setTransactionType('card_payment')" class="py-2.5 min-h-[44px] text-xs sm:text-sm font-bold rounded-lg text-slate-600 hover:text-slate-900 transition-all flex items-center justify-center gap-1 cursor-pointer">
-                            <i data-lucide="credit-card" class="w-4 h-4 shrink-0"></i> <span>Pagar TC</span>
+                            <i data-lucide="credit-card" class="w-4 h-4"></i>
+                            <span>Pagar TC</span>
                         </button>
                     </div>
 
-                    <!-- Aviso contextual inteligente según método/tipo -->
+                    <!-- Guía Contable Automática -->
                     <div id="tx-accounting-hint" class="px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-200/80 text-xs text-slate-600 flex items-start gap-2">
-                        <i data-lucide="info" class="w-4 h-4 text-slate-500 shrink-0 mt-0.5"></i>
-                        <span id="tx-accounting-hint-text">El monto se descontará de tu <strong>Liquidez Real</strong> (Banco/Efectivo).</span>
+                        <i data-lucide="info" class="w-4 h-4 shrink-0 mt-0.5 text-slate-500"></i>
+                        <span id="tx-accounting-hint-text"><strong>Gasto inmediato:</strong> El monto se descontará directamente de tu <strong>Liquidez Real</strong> (Banco/Efectivo).</span>
                     </div>
 
-                    <!-- Monto con botón de borrar campo -->
+                    <!-- Monto -->
                     <div>
-                        <div class="flex items-center justify-between mb-1.5">
-                            <label for="tx-amount" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider">Monto ($ USD)</label>
-                            <button type="button" onclick="clearAmountField()" class="text-[11px] font-medium text-slate-500 hover:text-rose-600 flex items-center gap-1 px-2 py-1 rounded-md hover:bg-rose-50 transition-colors cursor-pointer">
-                                <i data-lucide="eraser" class="w-3.5 h-3.5"></i> Borrar monto
+                        <div class="flex items-center justify-between mb-1">
+                            <label for="tx-amount" class="block text-xs font-bold text-slate-700">Monto ($ USD) *</label>
+                            <button type="button" onclick="clearAmountField()" class="text-[11px] font-semibold text-slate-400 hover:text-rose-600 transition-colors cursor-pointer">
+                                Limpiar monto
                             </button>
                         </div>
                         <div class="relative">
-                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400 font-bold text-xl">$</span>
-                            <input type="text" id="tx-amount" inputmode="decimal" autocomplete="off" required placeholder="0,00" oninput="sanitizeDecimalInput(this)"
-                                class="w-full pl-9 pr-4 py-3 min-h-[50px] bg-slate-50/70 border border-slate-200 rounded-xl text-xl font-extrabold text-slate-900 placeholder:text-slate-300 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-all">
+                            <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-extrabold text-lg">$</span>
+                            <input type="text" id="tx-amount" inputmode="decimal" oninput="sanitizeDecimalInput(this)" required placeholder="0,00"
+                                class="w-full pl-8 pr-4 py-3 text-xl font-extrabold text-slate-900 bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500">
                         </div>
                     </div>
 
-                    <!-- Concepto -->
+                    <!-- Concepto / Descripción -->
                     <div>
-                        <label for="tx-description" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Concepto / Detalle</label>
-                        <input type="text" id="tx-description" required placeholder="Ej. Sueldo quincenal, Supermercado, Pago tarjeta..." 
-                            class="w-full px-3.5 py-2.5 min-h-[46px] bg-slate-50/70 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-600 transition-all">
+                        <label for="tx-description" class="block text-xs font-bold text-slate-700 mb-1">Concepto / Detalle *</label>
+                        <input type="text" id="tx-description" required placeholder="Ej. Supermercado, Gasolina, Cena..."
+                            class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500">
                     </div>
 
-                    <!-- Categoría y Método de pago -->
+                    <!-- Categoría y Método de Pago -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div id="category-field-wrapper">
-                            <div class="flex items-center justify-between mb-1.5">
-                                <label for="tx-category" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider">Categoría</label>
-                                <button type="button" onclick="toggleAddCategory()" class="text-xs font-semibold text-emerald-600 hover:text-emerald-700">+ Nueva</button>
+                            <div class="flex items-center justify-between mb-1">
+                                <label for="tx-category" class="block text-xs font-bold text-slate-700">Categoría</label>
+                                <button type="button" onclick="toggleAddCategory()" class="text-[11px] font-bold text-emerald-600 hover:text-emerald-700 cursor-pointer">+ Nueva</button>
                             </div>
-                            <select id="tx-category" required class="w-full px-3 py-2.5 min-h-[46px] bg-slate-50/70 border border-slate-200 rounded-xl text-sm text-slate-800 focus:bg-white focus:outline-hidden">
+                            <select id="tx-category" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
                             </select>
                             <div id="add-category-row" class="hidden mt-2 flex gap-1.5">
-                                <input type="text" id="new-cat-input" placeholder="Ej. Mascotas" class="flex-1 px-2.5 py-2 text-xs bg-white border border-slate-300 rounded-lg">
-                                <button type="button" onclick="saveNewCategory()" class="px-3 py-2 bg-emerald-600 text-white text-xs font-semibold rounded-lg">OK</button>
+                                <input type="text" id="new-cat-input" placeholder="Nueva categoría" class="flex-1 px-2.5 py-1.5 text-xs border border-slate-300 rounded-lg">
+                                <button type="button" onclick="saveNewCategory()" class="px-2.5 py-1.5 bg-slate-900 text-white text-xs font-bold rounded-lg">OK</button>
                             </div>
                         </div>
 
-                        <div id="payment-field-wrapper">
-                            <label for="tx-payment" id="tx-payment-label" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Método / Cuenta</label>
-                            <select id="tx-payment" onchange="updateAccountingHint()" required class="w-full px-3 py-2.5 min-h-[46px] bg-slate-50/70 border border-slate-200 rounded-xl text-sm text-slate-800 focus:bg-white focus:outline-hidden">
+                        <div>
+                            <label id="tx-payment-label" for="tx-payment" class="block text-xs font-bold text-slate-700 mb-1">Método / Cuenta</label>
+                            <select id="tx-payment" onchange="updateAccountingHint()" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
                                 <option value="Cuenta Bancaria">Cuenta Bancaria</option>
                                 <option value="Efectivo">Efectivo</option>
                                 <option value="Tarjeta de Débito">Tarjeta de Débito</option>
@@ -406,25 +450,19 @@
                     <!-- Fecha y Nota -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label for="tx-date" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Fecha y Hora</label>
-                            <input type="datetime-local" id="tx-date" required class="w-full px-3 py-2.5 min-h-[46px] bg-slate-50/70 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-800 focus:bg-white focus:outline-hidden">
+                            <label for="tx-date" class="block text-xs font-bold text-slate-700 mb-1">Fecha y Hora</label>
+                            <input type="datetime-local" id="tx-date" required class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
                         </div>
                         <div>
-                            <label for="tx-note" class="block text-xs font-semibold text-slate-600 uppercase tracking-wider mb-1.5">Nota (Opcional)</label>
-                            <input type="text" id="tx-note" placeholder="Referencia o detalle..." class="w-full px-3 py-2.5 min-h-[46px] bg-slate-50/70 border border-slate-200 rounded-xl text-sm text-slate-800 focus:bg-white focus:outline-hidden">
+                            <label for="tx-note" class="block text-xs font-bold text-slate-700 mb-1">Nota (Opcional)</label>
+                            <input type="text" id="tx-note" placeholder="Referencia o comentario" class="w-full px-3 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
                         </div>
                     </div>
 
-                    <div class="pt-1 flex flex-col sm:flex-row gap-2.5">
-                        <button type="submit" id="submit-tx-btn" class="flex-1 py-3 px-4 min-h-[50px] bg-slate-900 hover:bg-slate-800 active:scale-[0.99] text-white text-sm font-bold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer">
-                            <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
-                            <span>Guardar Movimiento</span>
-                        </button>
-                        <button type="button" onclick="switchMainTab('history')" class="py-3 px-4 min-h-[50px] bg-slate-100 hover:bg-slate-200/80 text-slate-700 text-xs sm:text-sm font-semibold rounded-xl transition-all flex items-center justify-center gap-1.5 cursor-pointer">
-                            <i data-lucide="list" class="w-4 h-4"></i>
-                            <span>Ver Historial</span>
-                        </button>
-                    </div>
+                    <button type="submit" id="submit-tx-btn" class="w-full py-3.5 px-4 min-h-[48px] bg-slate-900 hover:bg-slate-800 text-white text-sm font-bold rounded-xl shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer">
+                        <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400"></i>
+                        <span>Guardar Movimiento</span>
+                    </button>
                 </form>
             </div>
         </div>
@@ -433,63 +471,62 @@
         <!-- PESTAÑA 2: HISTORIAL DE MOVIMIENTOS        -->
         <!-- ========================================== -->
         <div id="tab-view-history" class="hidden space-y-4">
-            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden">
-                <div class="p-4 sm:p-6 border-b border-slate-100 space-y-4">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                        <div>
-                            <h2 class="text-base sm:text-lg font-bold text-slate-900">Historial de Movimientos</h2>
-                            <p class="text-xs text-slate-500">Usa <strong class="text-slate-700">Editar</strong> para corregir un monto o <strong class="text-rose-600">Borrar</strong> para eliminarlo y recalcular tu saldo.</p>
-                        </div>
-                        <span id="tx-total-badge" class="self-start sm:self-auto text-xs font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-700">0 registros</span>
-                    </div>
-
-                    <!-- Barra de Filtros -->
-                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
-                        <div class="sm:col-span-2 relative">
-                            <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
-                            <input type="text" id="search-input" oninput="renderTransactionsTable()" placeholder="Buscar concepto o nota..." 
-                                class="w-full pl-9 pr-3 py-2.5 min-h-[42px] text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
-                        </div>
-                        <select id="filter-type" onchange="renderTransactionsTable()" class="px-3 py-2.5 min-h-[42px] text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
-                            <option value="ALL">Todos los tipos</option>
-                            <option value="income">Solo Ingresos (+)</option>
-                            <option value="expense">Solo Egresos (-)</option>
-                            <option value="card_payment">Abonos / Pagos TC</option>
-                        </select>
-                        <select id="filter-category" onchange="renderTransactionsTable()" class="px-3 py-2.5 min-h-[42px] text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
-                            <option value="ALL">Todas las categorías</option>
-                        </select>
+            <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs space-y-3">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <div class="flex items-center gap-2">
+                        <h2 class="text-base font-bold text-slate-900">Historial de Movimientos</h2>
+                        <span id="tx-total-badge" class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">0 registros</span>
                     </div>
                 </div>
 
-                <!-- Vista Móvil (Tarjetas táctiles para pantallas pequeñas) -->
-                <div id="transactions-mobile-list" class="md:hidden divide-y divide-slate-100"></div>
+                <!-- Buscador y Filtros -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+                    <div class="relative">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                        <input type="text" id="search-input" oninput="renderTransactionsTable()" placeholder="Buscar concepto o nota..."
+                            class="w-full pl-9 pr-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
+                    </div>
+                    <select id="filter-type" onchange="renderTransactionsTable()" class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
+                        <option value="ALL">Todos los movimientos</option>
+                        <option value="expense">Solo Egresos (-)</option>
+                        <option value="income">Solo Ingresos (+)</option>
+                        <option value="card_payment">Solo Pagos Tarjeta (⇄)</option>
+                    </select>
+                    <select id="filter-category" onchange="renderTransactionsTable()" class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
+                        <option value="ALL">Todas las categorías</option>
+                    </select>
+                </div>
+            </div>
 
-                <!-- Vista Desktop/Tablet (Tabla completa) -->
+            <!-- Contenedor de Lista Móvil y Tabla Escritorio -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 shadow-2xs overflow-hidden">
+                <!-- Vista Móvil (Tarjetas táctiles) -->
+                <div id="transactions-mobile-list" class="divide-y divide-slate-100 md:hidden"></div>
+
+                <!-- Vista Escritorio (Tabla) -->
                 <div class="hidden md:block overflow-x-auto">
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-slate-50/90 border-b border-slate-200/80 text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                                <th class="py-3.5 px-4">Fecha</th>
-                                <th class="py-3.5 px-4">Concepto / Detalle</th>
-                                <th class="py-3.5 px-4">Categoría</th>
-                                <th class="py-3.5 px-4">Método</th>
-                                <th class="py-3.5 px-4 text-right">Monto</th>
-                                <th class="py-3.5 px-4 text-right">Editar / Borrar</th>
+                                <th class="py-3 px-4">Fecha</th>
+                                <th class="py-3 px-4">Concepto</th>
+                                <th class="py-3 px-4">Categoría</th>
+                                <th class="py-3 px-4">Cuenta</th>
+                                <th class="py-3 px-4 text-right">Monto</th>
+                                <th class="py-3 px-4 text-right">Acciones</th>
                             </tr>
                         </thead>
-                        <tbody id="transactions-tbody" class="divide-y divide-slate-100 text-sm">
-                        </tbody>
+                        <tbody id="transactions-tbody" class="divide-y divide-slate-100 text-sm"></tbody>
                     </table>
                 </div>
 
                 <!-- Estado Vacío -->
                 <div id="empty-transactions-state" class="hidden py-12 px-4 text-center">
                     <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
-                        <i data-lucide="receipt" class="w-6 h-6"></i>
+                        <i data-lucide="inbox" class="w-6 h-6"></i>
                     </div>
                     <h3 class="text-sm font-bold text-slate-900">No hay movimientos registrados</h3>
-                    <p class="text-xs text-slate-500 mt-1 max-w-sm mx-auto">Ve a la pestaña <strong>Anotar</strong> para registrar tu primer ingreso o gasto.</p>
+                    <p class="text-xs text-slate-500 mt-1">Anota un ingreso o gasto desde la pestaña "Anotar".</p>
                 </div>
             </div>
         </div>
@@ -497,335 +534,207 @@
         <!-- ========================================== -->
         <!-- PESTAÑA 3: DASHBOARD Y GRÁFICAS            -->
         <!-- ========================================== -->
-        <div id="tab-view-dashboard" class="hidden space-y-6">
-            
-            <!-- TARJETAS DE INDICADORES (KPIs) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-                <!-- Liquidez Real (Banco / Efectivo) -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Liquidez Real</span>
-                        <div class="w-9 h-9 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center">
-                            <i data-lucide="wallet" class="w-4 h-4"></i>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <div id="kpi-balance" class="text-2xl font-extrabold text-slate-900 tracking-tight">$0.00</div>
-                        <p id="kpi-balance-note" class="text-xs text-slate-500 mt-1">Banco + Efectivo disponible</p>
-                    </div>
+        <div id="tab-view-dashboard" class="hidden space-y-5">
+            <!-- Tarjetas KPI -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Liquidez Real</span>
+                    <div id="kpi-balance" class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">$0.00</div>
+                    <p class="text-[11px] text-slate-500 mt-1">Banco + Efectivo disponible</p>
                 </div>
 
-                <!-- Deuda Acumulada en Tarjetas de Crédito -->
-                <div class="bg-white p-5 rounded-2xl border border-amber-200/80 shadow-2xs flex flex-col justify-between">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-amber-700">Consumos TC Mes</span>
-                        <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
-                            <i data-lucide="credit-card" class="w-4 h-4"></i>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <div id="kpi-credit-debt" class="text-2xl font-extrabold text-amber-600 tracking-tight">$0.00</div>
-                        <p id="kpi-credit-note" class="text-xs text-slate-500 mt-1">Por pagar al corte</p>
-                    </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-600">Ingresos</span>
+                    <div id="kpi-income" class="text-2xl font-extrabold text-emerald-600 tracking-tight mt-1">$0.00</div>
+                    <p id="kpi-income-count" class="text-[11px] text-slate-500 mt-1">0 ingresos</p>
                 </div>
 
-                <!-- Total Ingresos -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Total Ingresos</span>
-                        <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
-                            <i data-lucide="arrow-down-left" class="w-4 h-4"></i>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <div id="kpi-income" class="text-2xl font-extrabold text-emerald-600 tracking-tight">$0.00</div>
-                        <p id="kpi-income-count" class="text-xs text-slate-500 mt-1">0 ingresos registrados</p>
-                    </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-rose-600">Egresos Totales</span>
+                    <div id="kpi-expense" class="text-2xl font-extrabold text-rose-600 tracking-tight mt-1">$0.00</div>
+                    <p id="kpi-expense-count" class="text-[11px] text-slate-500 mt-1">0 compras/gastos</p>
                 </div>
 
-                <!-- Total Consumo / Egresos -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
-                    <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Consumo Total</span>
-                        <div class="w-9 h-9 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
-                            <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <div id="kpi-expense" class="text-2xl font-extrabold text-rose-600 tracking-tight">$0.00</div>
-                        <p id="kpi-expense-count" class="text-xs text-slate-500 mt-1">Efectivo + Tarjeta</p>
-                    </div>
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs">
+                    <span class="text-[11px] font-bold uppercase tracking-wider text-amber-600">Consumos TC Mes</span>
+                    <div id="kpi-credit-debt" class="text-2xl font-extrabold text-amber-600 tracking-tight mt-1">$0.00</div>
+                    <p id="kpi-credit-note" class="text-[11px] text-slate-500 mt-1">Nuevos consumos del mes</p>
                 </div>
 
-                <!-- Tasa de Ahorro -->
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col justify-between">
+                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-2xs">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Ahorro Neto</span>
-                        <div class="w-9 h-9 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                            <i data-lucide="piggy-bank" class="w-4 h-4"></i>
-                        </div>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Tasa Ahorro</span>
+                        <span id="kpi-savings-status" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Sin ingresos</span>
                     </div>
-                    <div class="mt-3">
-                        <div class="flex items-baseline gap-2">
-                            <span id="kpi-savings-rate" class="text-2xl font-extrabold text-slate-900 tracking-tight">0%</span>
-                            <span id="kpi-savings-status" class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">Sin datos</span>
-                        </div>
-                        <div class="w-full bg-slate-100 h-2 rounded-full mt-2.5 overflow-hidden">
-                            <div id="kpi-savings-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
-                        </div>
+                    <div id="kpi-savings-rate" class="text-2xl font-extrabold text-slate-900 tracking-tight mt-1">0%</div>
+                    <div class="w-full bg-slate-100 h-1.5 rounded-full mt-2 overflow-hidden">
+                        <div id="kpi-savings-bar" class="bg-emerald-500 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- SECCIÓN DE GRÁFICOS EN TIEMPO REAL -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- Gráfico de Barras: Flujo de Caja -->
-                <div class="lg:col-span-2 bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4">
-                        <div>
-                            <h2 class="text-base font-bold text-slate-900">Flujo de Ingresos vs. Egresos</h2>
-                            <p class="text-xs text-slate-500">Evolución diaria de tus movimientos financieros</p>
-                        </div>
-                        <div class="flex items-center gap-4 text-xs font-semibold">
-                            <span class="flex items-center gap-1.5 text-emerald-700">
-                                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Ingresos
-                            </span>
-                            <span class="flex items-center gap-1.5 text-rose-700">
-                                <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Egresos
-                            </span>
-                        </div>
+            <!-- Gráficas -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                <div class="lg:col-span-2 bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs">
+                    <div class="mb-4">
+                        <h3 class="text-base font-bold text-slate-900">Flujo Diario: Ingresos vs. Egresos</h3>
+                        <p class="text-xs text-slate-500">Evolución de entradas y salidas en el período</p>
                     </div>
-                    <div class="relative flex-1 min-h-[260px] w-full">
+                    <div class="h-64 w-full">
                         <canvas id="cashflow-chart"></canvas>
                     </div>
                 </div>
 
-                <!-- Gráfico de Dona: Distribución por Categorías -->
-                <div class="bg-white p-5 sm:p-6 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex flex-col">
                     <div class="mb-4">
-                        <h2 class="text-base font-bold text-slate-900">Distribución de Egresos</h2>
-                        <p class="text-xs text-slate-500">¿En qué se va tu dinero?</p>
+                        <h3 class="text-base font-bold text-slate-900">Distribución por Categoría</h3>
+                        <p class="text-xs text-slate-500">En qué se concentra tu gasto</p>
                     </div>
-                    <div class="relative flex-1 min-h-[210px] flex items-center justify-center">
+                    <div class="relative h-48 flex items-center justify-center">
                         <canvas id="category-chart"></canvas>
-                        <div id="category-chart-empty" class="hidden text-center text-xs text-slate-400">
-                            <i data-lucide="pie-chart" class="w-8 h-8 mx-auto mb-1 text-slate-300"></i>
-                            Aún no hay egresos en este período
-                        </div>
+                        <p id="category-chart-empty" class="hidden text-xs text-slate-400">Sin egresos registrados en este período</p>
                     </div>
-                    <div id="category-breakdown-list" class="mt-4 pt-3 border-t border-slate-100 space-y-2 max-h-36 overflow-y-auto text-xs"></div>
+                    <div id="category-breakdown-list" class="mt-4 pt-3 border-t border-slate-100 space-y-2 text-xs max-h-36 overflow-y-auto"></div>
                 </div>
             </div>
         </div>
+
     </main>
 
     <!-- ========================================== -->
     <!-- MODAL 1: ASESOR FINANCIERO IA & DOCUMENTOS -->
     <!-- ========================================== -->
     <div id="ai-advisor-modal" class="hidden fixed inset-0 z-50 overflow-y-auto">
-        <div class="flex items-end sm:items-center justify-center min-h-screen p-3 sm:p-6">
+        <div class="flex items-center justify-center min-h-screen p-4">
             <div onclick="closeAiAdvisorModal()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs"></div>
 
-            <div class="relative bg-white rounded-3xl max-w-4xl w-full shadow-2xl border border-slate-200 overflow-hidden z-10 my-4">
-                <!-- Header Modal IA -->
-                <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+            <div class="relative bg-white rounded-3xl max-w-3xl w-full p-5 sm:p-7 shadow-2xl border border-slate-200 z-10 space-y-5 max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-4">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 rounded-xl bg-indigo-500/20 border border-indigo-400/30 text-indigo-300 flex items-center justify-center">
+                        <div class="w-10 h-10 rounded-2xl bg-indigo-600 text-white flex items-center justify-center shadow-sm">
                             <i data-lucide="sparkles" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <h3 class="text-base sm:text-lg font-bold">Asesor Financiero IA & Escáner de Documentos</h3>
-                            <p class="text-xs text-slate-300">Sube o arrastra desde tu laptop/iPhone tu Rol de Pagos y Estado de Cuenta</p>
+                            <h3 class="text-base sm:text-lg font-bold text-slate-900">Asesor Financiero IA & Escáner de Documentos</h3>
+                            <p class="text-xs text-slate-500">Sube o pega (Ctrl+V) tu Rol de Pagos y Estado de Cuenta de Tarjeta</p>
                         </div>
                     </div>
-                    <button onclick="closeAiAdvisorModal()" class="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors">
+                    <button onclick="closeAiAdvisorModal()" class="p-2 text-slate-400 hover:text-slate-600 rounded-xl">
                         <i data-lucide="x" class="w-5 h-5"></i>
                     </button>
                 </div>
 
-                <div class="p-5 sm:p-6 space-y-5 max-h-[82vh] overflow-y-auto">
-                    <!-- Banner de comodidad Laptop / Pegar captura -->
-                    <div class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 rounded-xl bg-indigo-50/80 border border-indigo-200/80 text-xs text-indigo-900">
-                        <span class="flex items-center gap-2 font-medium">
-                            <i data-lucide="laptop" class="w-4 h-4 text-indigo-600 shrink-0"></i>
-                            <span><strong>Tip Laptop:</strong> Arrastra tus PDF/imágenes a los recuadros o presiona <kbd class="px-1.5 py-0.5 bg-white border border-indigo-200 rounded font-mono text-[11px]">Ctrl + V</kbd> para pegar una captura.</span>
-                        </span>
+                <!-- Zonas de Carga (Drag & Drop) -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Rol de Pagos -->
+                    <div id="dropzone-payslip" ondragover="handleDragOver(event, 'dropzone-payslip')" ondragleave="handleDragLeave(event, 'dropzone-payslip')" ondrop="handleFileDrop(event, 'payslip')"
+                        class="p-4 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/70 transition-all space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                <i data-lucide="file-text" class="w-4 h-4 text-emerald-600"></i> Rol de Pagos / Ingresos
+                            </span>
+                            <label class="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-xs font-bold cursor-pointer">
+                                + Subir
+                                <input type="file" accept=".pdf,image/*" multiple class="hidden" onchange="handleDocSelect(event, 'payslip')">
+                            </label>
+                        </div>
+                        <div id="list-payslip" class="space-y-1.5">
+                            <p class="text-slate-400 italic text-[11px]">Arrastra aquí tu rol de pagos o selecciónalo arriba...</p>
+                        </div>
                     </div>
 
-                    <!-- Zonas de Carga de Documentos (Drag & Drop) -->
+                    <!-- Estado de Cuenta Tarjeta -->
+                    <div id="dropzone-statement" ondragover="handleDragOver(event, 'dropzone-statement')" ondragleave="handleDragLeave(event, 'dropzone-statement')" ondrop="handleFileDrop(event, 'statement')"
+                        class="p-4 rounded-2xl border-2 border-dashed border-slate-200 bg-slate-50/70 transition-all space-y-2.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-slate-800 flex items-center gap-1.5">
+                                <i data-lucide="credit-card" class="w-4 h-4 text-indigo-600"></i> Estado de Cuenta Tarjeta
+                            </span>
+                            <label class="px-2.5 py-1 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-lg text-xs font-bold cursor-pointer">
+                                + Subir
+                                <input type="file" accept=".pdf,image/*" multiple class="hidden" onchange="handleDocSelect(event, 'statement')">
+                            </label>
+                        </div>
+                        <div id="list-statement" class="space-y-1.5">
+                            <p class="text-slate-400 italic text-[11px]">Arrastra aquí tu estado de cuenta o pégalo con Ctrl+V...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label for="ai-user-context" class="block text-xs font-bold text-slate-700 mb-1">Meta o consulta adicional (Opcional)</label>
+                    <input type="text" id="ai-user-context" placeholder="Ej. Quiero liquidar mi tarjeta en 3 meses y mejorar mi score..."
+                        class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-200 rounded-xl focus:bg-white focus:outline-hidden">
+                </div>
+
+                <button type="button" id="run-ai-analysis-btn" onclick="analyzeFinancialDocuments()"
+                    class="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-xl shadow-sm flex items-center justify-center gap-2 transition-all cursor-pointer">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    <span>Analizar Documentos y Crear Plan de Pagos</span>
+                </button>
+
+                <!-- Estado Cargando -->
+                <div id="ai-loading-state" class="hidden py-6 text-center space-y-2">
+                    <div class="w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
+                    <p class="text-xs font-semibold text-slate-600">Analizando cifras, fechas de corte y estrategia de score crediticio...</p>
+                </div>
+
+                <!-- Resultados del Análisis -->
+                <div id="ai-results-container" class="hidden space-y-4 pt-2 border-t border-slate-100">
+                    <div class="p-4 rounded-2xl bg-slate-900 text-white space-y-2">
+                        <div class="flex items-center justify-between flex-wrap gap-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">Diagnóstico Financiero</span>
+                            <span id="ai-utilization-badge" class="text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-white/10 text-white"></span>
+                        </div>
+                        <p id="ai-summary-text" class="text-xs sm:text-sm text-slate-200 leading-relaxed"></p>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <!-- Zona 1: Rol de Pagos -->
-                        <div id="dropzone-payslip" 
-                            ondragover="handleDragOver(event, 'dropzone-payslip')" 
-                            ondragleave="handleDragLeave(event, 'dropzone-payslip')" 
-                            ondrop="handleFileDrop(event, 'payslip')"
-                            class="p-4 rounded-2xl border-2 border-dashed border-slate-300 hover:border-emerald-500 bg-slate-50/60 transition-all space-y-3">
-                            <div class="flex items-start justify-between">
-                                <div class="flex items-center gap-2.5">
-                                    <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
-                                        <i data-lucide="banknote" class="w-5 h-5"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-sm font-bold text-slate-900">1. Rol de Pagos / Nómina</h4>
-                                        <p class="text-[11px] text-slate-500">PDF, PNG o JPG de tus ingresos</p>
-                                    </div>
-                                </div>
-                                <label class="px-3 py-1.5 bg-white hover:bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-xl text-xs font-semibold cursor-pointer shadow-2xs">
-                                    Seleccionar
-                                    <input type="file" id="input-payslip" accept="image/*,application/pdf" multiple class="hidden" onchange="handleDocSelect(event, 'payslip')">
-                                </label>
-                            </div>
-                            <div id="list-payslip" class="space-y-1.5 text-xs">
-                                <p class="text-slate-400 italic text-[11px]">Arrastra aquí tu rol de pagos o selecciónalo arriba...</p>
-                            </div>
+                        <div class="p-4 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 space-y-2">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-emerald-900">Qué y Cómo Pagar tus Tarjetas</h4>
+                            <ul id="ai-payment-plan-list" class="space-y-2 text-xs text-slate-700"></ul>
                         </div>
 
-                        <!-- Zona 2: Estado de Cuenta Tarjeta -->
-                        <div id="dropzone-statement" 
-                            ondragover="handleDragOver(event, 'dropzone-statement')" 
-                            ondragleave="handleDragLeave(event, 'dropzone-statement')" 
-                            ondrop="handleFileDrop(event, 'statement')"
-                            class="p-4 rounded-2xl border-2 border-dashed border-slate-300 hover:border-indigo-500 bg-slate-50/60 transition-all space-y-3">
-                            <div class="flex items-start justify-between">
-                                <div class="flex items-center gap-2.5">
-                                    <div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 flex items-center justify-center">
-                                        <i data-lucide="credit-card" class="w-5 h-5"></i>
-                                    </div>
-                                    <div>
-                                        <h4 class="text-sm font-bold text-slate-900">2. Estado de Cuenta Tarjeta</h4>
-                                        <p class="text-[11px] text-slate-500">PDF o capturas de tus tarjetas</p>
-                                    </div>
-                                </div>
-                                <label class="px-3 py-1.5 bg-white hover:bg-indigo-50 text-indigo-700 border border-indigo-200 rounded-xl text-xs font-semibold cursor-pointer shadow-2xs">
-                                    Seleccionar
-                                    <input type="file" id="input-statement" accept="image/*,application/pdf" multiple class="hidden" onchange="handleDocSelect(event, 'statement')">
-                                </label>
-                            </div>
-                            <div id="list-statement" class="space-y-1.5 text-xs">
-                                <p class="text-slate-400 italic text-[11px]">Arrastra aquí tu estado de cuenta o pégalo con Ctrl+V...</p>
-                            </div>
+                        <div class="p-4 rounded-2xl bg-indigo-50/70 border border-indigo-200/80 space-y-2">
+                            <h4 class="text-xs font-bold uppercase tracking-wider text-indigo-900">Estrategia Score Crediticio</h4>
+                            <ul id="ai-score-tips-list" class="space-y-2 text-xs text-slate-700"></ul>
                         </div>
                     </div>
 
-                    <!-- Contexto o pregunta adicional -->
-                    <div>
-                        <label for="ai-user-context" class="block text-xs font-semibold text-slate-600 mb-1">Objetivo o consulta adicional (Opcional)</label>
-                        <input type="text" id="ai-user-context" placeholder="Ej. Quiero salir de deudas rápido y subir mi score crediticio para un crédito hipotecario..." 
-                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:bg-white focus:outline-hidden focus:border-indigo-500">
+                    <!-- Simulador de Salida Rápida de Deudas -->
+                    <div id="debt-payoff-simulator" class="hidden p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-3">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <div>
+                                <h4 class="text-xs sm:text-sm font-bold text-amber-950">Plan Acelerado para Salir de Deudas</h4>
+                                <p class="text-[11px] text-amber-800">Deuda detectada: <strong id="debt-total-detected">$0.00</strong> • Libre de deudas en: <strong id="debt-months-to-free">0 meses</strong></p>
+                            </div>
+                            <div class="flex items-center gap-1 bg-white p-1 rounded-xl border border-amber-200">
+                                <button type="button" id="btn-strategy-avalanche" onclick="setDebtStrategy('avalanche')" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-600 text-white cursor-pointer">Avalancha</button>
+                                <button type="button" id="btn-strategy-snowball" onclick="setDebtStrategy('snowball')" class="px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600 cursor-pointer">Bola de Nieve</button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2">
+                            <label for="extra-debt-payment" class="text-xs font-semibold text-amber-950">Abono mensual extra ($):</label>
+                            <input type="number" id="extra-debt-payment" value="50" min="0" step="10" oninput="recalculateDebtPlan()"
+                                class="w-28 px-2.5 py-1.5 text-xs font-bold bg-white border border-amber-300 rounded-lg">
+                        </div>
+
+                        <div id="debt-cards-order-list" class="space-y-2 text-xs"></div>
                     </div>
 
-                    <!-- Botón Analizar -->
-                    <div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-1">
-                        <p class="text-[11px] text-slate-500">Tus archivos se procesan de forma segura y no se almacenan en servidores públicos.</p>
-                        <button type="button" id="run-ai-analysis-btn" onclick="analyzeFinancialDocuments()" class="w-full sm:w-auto px-6 py-3 min-h-[46px] bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-bold rounded-xl shadow-sm flex items-center justify-center gap-2 transition-all cursor-pointer">
-                            <i data-lucide="cpu" class="w-4 h-4"></i>
-                            <span>Analizar Documentos y Crear Plan</span>
-                        </button>
-                    </div>
-
-                    <!-- Indicador de Carga IA -->
-                    <div id="ai-loading-state" class="hidden py-8 text-center space-y-3 bg-slate-50 rounded-2xl border border-slate-200/80">
-                        <div class="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin mx-auto"></div>
-                        <p class="text-sm font-bold text-slate-800">Analizando tus ingresos, fechas de corte y cupos de tarjeta...</p>
-                        <p class="text-xs text-slate-500">Calculando estrategia óptima de pagos y score crediticio</p>
-                    </div>
-
-                    <!-- Resultados del Análisis IA -->
-                    <div id="ai-results-container" class="hidden space-y-4 pt-2 border-t border-slate-200">
-                        <!-- Diagnóstico y Utilización de Crédito -->
-                        <div class="p-4 sm:p-5 rounded-2xl bg-slate-900 text-white space-y-2">
-                            <div class="flex flex-wrap items-center justify-between gap-2">
-                                <span class="text-xs font-bold uppercase tracking-wider text-indigo-300">Diagnóstico Financiero</span>
-                                <span id="ai-utilization-badge" class="text-xs font-semibold px-2.5 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">Utilización analizada</span>
+                    <!-- Movimientos Detectados Editables -->
+                    <div id="ai-detected-tx-section" class="hidden p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h4 class="text-xs font-bold text-slate-900">Movimientos Detectados (Edita o borra antes de sumar)</h4>
+                                <p class="text-[11px] text-slate-500">Se agregarán directamente a tu historial y gráficas</p>
                             </div>
-                            <p id="ai-summary-text" class="text-xs sm:text-sm text-slate-200 leading-relaxed"></p>
-                        </div>
-
-                        <!-- Plan de Pagos y Score Crediticio -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div class="p-4 sm:p-5 rounded-2xl bg-emerald-50/60 border border-emerald-200/80 space-y-2.5">
-                                <h4 class="text-sm font-bold text-emerald-950 flex items-center gap-2">
-                                    <i data-lucide="calendar-check" class="w-4 h-4 text-emerald-600"></i>
-                                    Qué y Cómo Pagar tus Tarjetas
-                                </h4>
-                                <ul id="ai-payment-plan-list" class="space-y-2 text-xs text-slate-700"></ul>
-                            </div>
-
-                            <div class="p-4 sm:p-5 rounded-2xl bg-indigo-50/60 border border-indigo-200/80 space-y-2.5">
-                                <h4 class="text-sm font-bold text-indigo-950 flex items-center gap-2">
-                                    <i data-lucide="award" class="w-4 h-4 text-indigo-600"></i>
-                                    Estrategia para Subir tu Score Crediticio
-                                </h4>
-                                <ul id="ai-score-tips-list" class="space-y-2 text-xs text-slate-700"></ul>
-                            </div>
-                        </div>
-
-                        <!-- Simulador de Salida Rápida de Deudas (Avalancha vs Bola de Nieve) -->
-                        <div id="debt-payoff-simulator" class="hidden p-4 sm:p-5 rounded-2xl bg-amber-50/60 border border-amber-200/80 space-y-4">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                <div>
-                                    <h4 class="text-sm font-bold text-amber-950 flex items-center gap-2">
-                                        <i data-lucide="flame" class="w-4 h-4 text-amber-600"></i>
-                                        Plan Acelerado para Salir de Deudas Pronto
-                                    </h4>
-                                    <p class="text-xs text-amber-800/80">Compara cómo liquidar tus tarjetas más rápido y ahorrar intereses</p>
-                                </div>
-                                <div class="flex items-center gap-1.5 bg-white p-1 rounded-xl border border-amber-200/80 self-start">
-                                    <button type="button" id="btn-strategy-avalanche" onclick="setDebtStrategy('avalanche')" class="px-2.5 py-1 text-xs font-bold rounded-lg bg-amber-600 text-white transition-all cursor-pointer">
-                                        Avalancha (Menor interés)
-                                    </button>
-                                    <button type="button" id="btn-strategy-snowball" onclick="setDebtStrategy('snowball')" class="px-2.5 py-1 text-xs font-semibold rounded-lg text-slate-600 hover:text-slate-900 transition-all cursor-pointer">
-                                        Bola de Nieve (Más rápido)
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Control de abono extra mensual -->
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white p-3.5 rounded-xl border border-amber-200/60">
-                                <div>
-                                    <label for="extra-debt-payment" class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Abono Extra Mensual ($)</label>
-                                    <input type="number" id="extra-debt-payment" min="0" step="10" value="50" oninput="recalculateDebtPlan()"
-                                        class="w-full px-3 py-1.5 text-sm font-extrabold text-slate-900 bg-slate-50 border border-slate-200 rounded-lg focus:bg-white focus:border-amber-500 focus:outline-hidden">
-                                </div>
-                                <div class="flex flex-col justify-center">
-                                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Tiempo estimado libre</span>
-                                    <span id="debt-months-to-free" class="text-lg font-extrabold text-emerald-600">-- meses</span>
-                                </div>
-                                <div class="flex flex-col justify-center">
-                                    <span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Deuda Total Detectada</span>
-                                    <span id="debt-total-detected" class="text-lg font-extrabold text-slate-900">$0.00</span>
-                                </div>
-                            </div>
-
-                            <!-- Orden exacto de ataque a las tarjetas -->
-                            <div id="debt-cards-order-list" class="space-y-2 text-xs"></div>
-                        </div>
-
-                        <!-- Vista Previa Editable de Movimientos Detectados -->
-                        <div id="ai-detected-tx-section" class="hidden p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3">
-                            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-                                <div>
-                                    <h4 class="text-sm font-bold text-slate-900">Movimientos Extraídos de tus Documentos</h4>
-                                    <p class="text-xs text-slate-500">Edita cualquier monto o elimina los que no desees antes de sumarlos al balance</p>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <button type="button" onclick="importDetectedTransactions()" class="py-2 px-4 min-h-[40px] bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-2xs flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
-                                        <i data-lucide="plus-circle" class="w-4 h-4"></i>
-                                        <span>Importar al Dashboard</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="ai-detected-tx-list" class="divide-y divide-slate-100 max-h-64 overflow-y-auto text-xs"></div>
-                        </div>
-
-                        <!-- Botón Sincronizar con iPhone -->
-                        <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3">
-                            <span class="text-xs text-slate-600">¿Trabajaste desde tu laptop? Descarga el respaldo para cargarlo en tu iPhone:</span>
-                            <button type="button" onclick="exportJSON()" class="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl flex items-center gap-1.5 shrink-0 cursor-pointer">
-                                <i data-lucide="smartphone" class="w-3.5 h-3.5 text-emerald-400"></i>
-                                Descargar Respaldo JSON para iPhone
+                            <button type="button" onclick="importDetectedTransactions()" class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl cursor-pointer">
+                                Importar al Dashboard
                             </button>
                         </div>
+                        <div id="ai-detected-tx-list" class="divide-y divide-slate-200 text-xs"></div>
                     </div>
                 </div>
             </div>
@@ -833,45 +742,38 @@
     </div>
 
     <!-- ========================================== -->
-    <!-- MODAL 2: SEGURIDAD Y PIN PRIVADO           -->
+    <!-- MODAL 2: SEGURIDAD Y PIN                   -->
     <!-- ========================================== -->
     <div id="security-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4">
         <div onclick="closeSecurityModal()" class="fixed inset-0 bg-slate-900/50 backdrop-blur-xs"></div>
-        <div class="relative bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 z-10 space-y-4">
+        <div class="relative bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 z-10 space-y-4">
             <div class="flex items-center justify-between">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded-xl bg-slate-900 text-emerald-400 flex items-center justify-center">
                         <i data-lucide="shield" class="w-5 h-5"></i>
                     </div>
-                    <h3 class="text-base font-bold text-slate-900">Privacidad y PIN de Seguridad</h3>
+                    <h3 class="text-base font-bold text-slate-900">PIN de Privacidad</h3>
                 </div>
                 <button onclick="closeSecurityModal()" class="p-1.5 text-slate-400 hover:text-slate-600 rounded-lg">
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
             </div>
-
-            <div class="p-3.5 rounded-xl bg-emerald-50/70 border border-emerald-200/80 text-xs text-emerald-950 space-y-1">
-                <p class="font-bold">Tus datos nunca suben a internet</p>
-                <p>Toda tu información financiera vive exclusivamente en la memoria interna de este navegador/dispositivo.</p>
+            <p class="text-xs text-slate-500">Protege tus saldos con un código de 4 números cada vez que abras la app en tu iPhone o laptop.</p>
+            <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Nuevo PIN (4 dígitos)</label>
+                <input type="password" id="new-pin-input" maxlength="4" inputmode="numeric" placeholder="••••"
+                    class="w-full px-4 py-2.5 text-center text-xl tracking-[0.5em] font-bold bg-slate-50 border border-slate-200 rounded-xl">
             </div>
-
-            <div class="space-y-3">
-                <label class="block text-xs font-semibold text-slate-700">Configurar PIN de 4 dígitos para bloquear la app:</label>
-                <div class="flex gap-2">
-                    <input type="password" id="new-pin-input" maxlength="4" inputmode="numeric" pattern="[0-9]*" placeholder="Ej. 2580" 
-                        class="flex-1 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-center text-lg font-bold tracking-[0.5em]">
-                    <button type="button" onclick="saveSecurityPin()" class="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl cursor-pointer">
-                        Activar PIN
-                    </button>
-                </div>
-                <div id="active-pin-actions" class="hidden pt-2 flex items-center justify-between border-t border-slate-100">
-                    <button type="button" onclick="lockAppNow(); closeSecurityModal();" class="text-xs font-semibold text-indigo-600 hover:underline flex items-center gap-1">
-                        <i data-lucide="lock" class="w-3.5 h-3.5"></i> Bloquear pantalla ahora
-                    </button>
-                    <button type="button" onclick="removeSecurityPin()" class="text-xs font-semibold text-rose-600 hover:underline">
-                        Desactivar PIN
-                    </button>
-                </div>
+            <button type="button" onclick="saveSecurityPin()" class="w-full py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-xs sm:text-sm font-bold rounded-xl cursor-pointer">
+                Guardar PIN
+            </button>
+            <div id="active-pin-actions" class="hidden pt-2 border-t border-slate-100 flex items-center justify-between gap-2">
+                <button type="button" onclick="closeSecurityModal(); lockAppNow();" class="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold rounded-xl cursor-pointer">
+                    Bloquear ahora
+                </button>
+                <button type="button" onclick="removeSecurityPin()" class="flex-1 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold rounded-xl cursor-pointer">
+                    Quitar PIN
+                </button>
             </div>
         </div>
     </div>
@@ -958,6 +860,7 @@
         const DEFAULT_CATEGORIES = {
             expense: [
                 'Alimentación',
+                'Préstamos y Créditos',
                 'Tarjeta de Crédito',
                 'Vivienda y Servicios',
                 'Transporte y Gasolina',
@@ -1604,6 +1507,14 @@
             }
             const miniDebtEl = document.getElementById('mini-credit-debt');
             if (miniDebtEl) miniDebtEl.textContent = formatCurrency(creditDebt);
+            const quickPayTcBtn = document.getElementById('quick-pay-tc-month-btn');
+            if (quickPayTcBtn) {
+                if (creditDebt > 0) {
+                    quickPayTcBtn.classList.remove('hidden');
+                } else {
+                    quickPayTcBtn.classList.add('hidden');
+                }
+            }
             const miniIncomeEl = document.getElementById('mini-income');
             if (miniIncomeEl) miniIncomeEl.textContent = formatCurrency(totalIncome);
             const miniExpenseEl = document.getElementById('mini-expense');
@@ -2357,11 +2268,88 @@ Devuelve un análisis práctico en español con:
             );
         }
 
-        // --- 8B. RECORDATORIOS DE MÚLTIPLES TARJETAS PROGRAMADAS ---
+        function exportCSV() {
+            if (!transactions.length) {
+                showToast('No hay movimientos para exportar', 'info');
+                return;
+            }
+            const headers = ['Fecha', 'Tipo', 'Concepto', 'Categoria', 'Cuenta', 'Monto', 'Nota'];
+            const rows = transactions.map(t => [
+                t.date,
+                t.type === 'income' ? 'Ingreso' : (t.type === 'card_payment' ? 'Pago Tarjeta' : 'Egreso'),
+                `"${(t.description || '').replace(/"/g, '""')}"`,
+                `"${(t.category || '').replace(/"/g, '""')}"`,
+                `"${(t.payment || '').replace(/"/g, '""')}"`,
+                t.amount,
+                `"${(t.note || '').replace(/"/g, '""')}"`
+            ]);
+            const csvContent = 'data:text/csv;charset=utf-8,\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+            const link = document.createElement('a');
+            link.href = encodeURI(csvContent);
+            link.download = `FinanzaFlow_${new Date().toISOString().slice(0, 10)}.csv`;
+            link.click();
+            showToast('Archivo Excel (CSV) descargado', 'success');
+        }
+
+        function exportJSON() {
+            const backup = {
+                version: '2.0',
+                exportedAt: new Date().toISOString(),
+                transactions,
+                categories,
+                scheduledCards: getScheduledCards()
+            };
+            const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `Respaldo_FinanzaFlow_${new Date().toISOString().slice(0, 10)}.json`;
+            link.click();
+            showToast('Respaldo JSON descargado', 'success');
+        }
+
+        function importJSON(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (Array.isArray(data.transactions)) {
+                        transactions = data.transactions;
+                        if (data.categories) categories = data.categories;
+                        if (Array.isArray(data.scheduledCards)) {
+                            localStorage.setItem(SCHEDULED_CARDS_KEY, JSON.stringify(data.scheduledCards));
+                        }
+                        saveToStorage();
+                        populateCategoryDropdowns();
+                        renderScheduledCardUI();
+                        renderApp();
+                        showToast('Respaldo restaurado correctamente', 'success');
+                    } else {
+                        showToast('Archivo de respaldo no válido', 'error');
+                    }
+                } catch (err) {
+                    showToast('Error al leer el archivo JSON', 'error');
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        function downloadSelfHtml() {
+            const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
+            const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'index.html';
+            link.click();
+            showToast('Archivo index.html descargado', 'success');
+        }
+
+        // --- 8B. GESTIÓN DE PRÓXIMOS PAGOS DE TARJETAS ---
         function getScheduledCards() {
             try {
-                const raw = localStorage.getItem(SCHEDULED_CARDS_KEY);
-                return raw ? JSON.parse(raw) : [];
+                return JSON.parse(localStorage.getItem(SCHEDULED_CARDS_KEY) || '[]');
             } catch (e) {
                 return [];
             }
@@ -2371,106 +2359,162 @@ Devuelve un análisis práctico en español con:
             localStorage.setItem(SCHEDULED_CARDS_KEY, JSON.stringify(list));
         }
 
-        function openScheduledCardForm(cardId = null) {
-            const editor = document.getElementById('upcoming-card-editor');
-            editor.classList.remove('hidden');
-
-            if (cardId) {
-                const card = getScheduledCards().find(c => c.id === cardId);
+        function openScheduledCardForm(editId = null) {
+            const form = document.getElementById('scheduled-card-form');
+            form.classList.remove('hidden');
+            if (editId) {
+                const card = getScheduledCards().find(c => c.id === editId);
                 if (!card) return;
-                document.getElementById('editing-scheduled-card-id').value = card.id;
-                document.getElementById('scheduled-card-name').value = card.name;
-                document.getElementById('scheduled-card-amount').value = Number(card.amount).toFixed(2).replace('.', ',');
-                document.getElementById('scheduled-card-date').value = card.dueDate;
+                document.getElementById('sched-card-edit-id').value = card.id;
+                document.getElementById('sched-card-kind').value = card.kind || 'card';
+                document.getElementById('sched-card-name').value = card.name;
+                document.getElementById('sched-card-amount').value = Number(card.amount).toFixed(2).replace('.', ',');
+                document.getElementById('sched-card-date').value = card.dueDate;
             } else {
-                document.getElementById('editing-scheduled-card-id').value = '';
-                document.getElementById('scheduled-card-name').value = '';
-                document.getElementById('scheduled-card-amount').value = '';
-                document.getElementById('scheduled-card-date').value = new Date().getFullYear() + '-12-05';
+                document.getElementById('sched-card-edit-id').value = '';
+                document.getElementById('sched-card-kind').value = 'card';
+                document.getElementById('sched-card-name').value = '';
+                document.getElementById('sched-card-amount').value = '';
+                const nextWeek = new Date();
+                nextWeek.setDate(nextWeek.getDate() + 7);
+                document.getElementById('sched-card-date').value = nextWeek.toISOString().slice(0, 10);
             }
-            document.getElementById('scheduled-card-name').focus();
+            document.getElementById('sched-card-name').focus();
         }
 
-        function closeScheduledCardEditor() {
-            document.getElementById('upcoming-card-editor').classList.add('hidden');
-            document.getElementById('editing-scheduled-card-id').value = '';
+        function closeScheduledCardForm() {
+            document.getElementById('scheduled-card-form').classList.add('hidden');
         }
 
-        function saveScheduledCardReminder() {
-            const editId = document.getElementById('editing-scheduled-card-id').value;
-            const name = document.getElementById('scheduled-card-name').value.trim() || 'Tarjeta de Crédito';
-            const amt = parseDecimalAmount(document.getElementById('scheduled-card-amount').value);
-            const dueDate = document.getElementById('scheduled-card-date').value;
+        function saveScheduledCard() {
+            const editId = document.getElementById('sched-card-edit-id').value;
+            const kind = document.getElementById('sched-card-kind').value;
+            const name = document.getElementById('sched-card-name').value.trim();
+            const amount = parseDecimalAmount(document.getElementById('sched-card-amount').value);
+            const dueDate = document.getElementById('sched-card-date').value;
 
-            if (isNaN(amt) || amt <= 0 || !dueDate) {
-                showToast('Ingresa el nombre, un monto válido y la fecha límite', 'error');
+            if (!name || isNaN(amount) || amount <= 0 || !dueDate) {
+                showToast('Completa entidad, monto válido y fecha límite', 'error');
                 return;
             }
 
-            const list = getScheduledCards();
+            let list = getScheduledCards();
             if (editId) {
-                const idx = list.findIndex(c => c.id === editId);
-                if (idx !== -1) list[idx] = { ...list[idx], name, amount: amt, dueDate };
-                showToast('Tarjeta programada actualizada', 'success');
+                list = list.map(c => c.id === editId ? { ...c, kind, name, amount, dueDate } : c);
+                showToast('Obligación actualizada', 'success');
             } else {
                 list.push({
-                    id: 'sc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 5),
+                    id: 'card_' + Date.now(),
+                    kind,
                     name,
-                    amount: amt,
+                    amount,
                     dueDate
                 });
-                showToast(`"${name}" agregada a próximos pagos`, 'success');
+                showToast(kind === 'loan' ? 'Préstamo agregado a próximos pagos' : 'Tarjeta agregada a próximos pagos', 'success');
             }
 
             saveScheduledCardsList(list);
-            closeScheduledCardEditor();
+            closeScheduledCardForm();
             renderScheduledCardUI();
         }
 
-        function removeScheduledCard(cardId) {
-            const updated = getScheduledCards().filter(c => c.id !== cardId);
-            saveScheduledCardsList(updated);
+        function removeScheduledCard(id) {
+            const list = getScheduledCards().filter(c => c.id !== id);
+            saveScheduledCardsList(list);
             renderScheduledCardUI();
-            showToast('Recordatorio de tarjeta eliminado', 'info');
+            showToast('Obligación quitada de pendientes', 'info');
         }
 
-        function markScheduledCardPaid(cardId) {
+        function markScheduledCardPaid(id) {
             const list = getScheduledCards();
-            const cardIndex = list.findIndex(c => c.id === cardId);
-            if (cardIndex === -1) return;
+            const card = list.find(c => c.id === id);
+            if (!card) return;
 
-            const cardSnapshot = { ...list[cardIndex] };
+            const remaining = list.filter(c => c.id !== id);
+            saveScheduledCardsList(remaining);
+
             const now = new Date();
             now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
-            const generatedTxId = 'tx_' + Date.now() + '_card';
+            const generatedTxId = 'tx_' + Date.now() + '_sched';
+            const isLoan = card.kind === 'loan';
 
             transactions.unshift({
                 id: generatedTxId,
-                type: 'card_payment',
-                amount: Number(cardSnapshot.amount),
-                description: `Pago ${cardSnapshot.name}`,
-                category: 'Pago Tarjeta de Crédito',
+                type: isLoan ? 'expense' : 'card_payment',
+                amount: Number(card.amount),
+                description: isLoan ? `Cuota Préstamo: ${card.name}` : `Pago ${card.name}`,
+                category: isLoan ? 'Préstamos y Créditos' : 'Pago Tarjeta de Crédito',
                 payment: 'Cuenta Bancaria',
                 date: now.toISOString().slice(0, 16),
-                note: `Vencimiento ${cardSnapshot.dueDate}`,
-                isScheduledCardSettlement: true
+                note: `Pago programado (vence ${card.dueDate})`,
+                isScheduledCardSettlement: !isLoan
             });
 
-            saveScheduledCardsList(list.filter(c => c.id !== cardId));
             saveToStorage();
             renderScheduledCardUI();
             renderApp();
 
-            showToast(`Pago de ${cardSnapshot.name} registrado`, 'success', () => {
-                // Deshacer: eliminar la transacción creada y restaurar la tarjeta programada
+            showToast(`Pago de ${card.name} (${formatCurrency(card.amount)}) registrado`, 'success', () => {
                 transactions = transactions.filter(t => t.id !== generatedTxId);
-                const restoredList = getScheduledCards();
-                restoredList.push(cardSnapshot);
-                saveScheduledCardsList(restoredList);
+                const restored = getScheduledCards();
+                restored.push(card);
+                saveScheduledCardsList(restored);
                 saveToStorage();
                 renderScheduledCardUI();
                 renderApp();
-                showToast(`Se deshizo el pago de ${cardSnapshot.name}`, 'info');
+                showToast('Pago deshecho y obligación restaurada', 'info');
+            });
+        }
+
+        // --- 8A. PAGO RÁPIDO DE CONSUMOS TC MES ---
+        function openPayMonthlyTcModal() {
+            const rawDebtText = document.getElementById('mini-credit-debt').textContent.replace(/[^0-9.]/g, '');
+            const currentDebt = parseFloat(rawDebtText) || 0;
+            if (currentDebt <= 0) return;
+
+            document.getElementById('monthly-tc-pay-amount').value = currentDebt.toFixed(2).replace('.', ',');
+            document.getElementById('pay-monthly-tc-box').classList.remove('hidden');
+            document.getElementById('monthly-tc-pay-amount').focus();
+            if (typeof lucide !== 'undefined') lucide.createIcons();
+        }
+
+        function closePayMonthlyTcModal() {
+            document.getElementById('pay-monthly-tc-box').classList.add('hidden');
+        }
+
+        function confirmPayMonthlyTc() {
+            const amt = parseDecimalAmount(document.getElementById('monthly-tc-pay-amount').value);
+            const account = document.getElementById('monthly-tc-pay-account').value;
+
+            if (isNaN(amt) || amt <= 0) {
+                showToast('Ingresa un monto válido para abonar', 'error');
+                return;
+            }
+
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            const generatedId = 'tx_' + Date.now() + '_tcmonth';
+
+            transactions.unshift({
+                id: generatedId,
+                type: 'card_payment',
+                amount: amt,
+                description: 'Pago Consumos TC del Mes',
+                category: 'Pago Tarjeta de Crédito',
+                payment: account,
+                date: now.toISOString().slice(0, 16),
+                note: 'Abono directo a consumos del período'
+            });
+
+            saveToStorage();
+            closePayMonthlyTcModal();
+            renderApp();
+
+            showToast(`Abono de ${formatCurrency(amt)} aplicado a Consumos TC`, 'success', () => {
+                transactions = transactions.filter(t => t.id !== generatedId);
+                saveToStorage();
+                renderApp();
+                showToast('Abono deshecho', 'info');
             });
         }
 
@@ -2481,7 +2525,7 @@ Devuelve un análisis práctico en español con:
 
             if (list.length === 0) {
                 totalBadge.classList.add('hidden');
-                listEl.innerHTML = `<p class="text-xs text-amber-800/80 bg-white/60 px-3 py-2 rounded-xl border border-amber-200/60">No tienes tarjetas programadas. Toca <strong>+ Agregar Tarjeta</strong> para anotar tus fechas de corte o pago (ej. Visa 5 dic, Diners 15 dic).</p>`;
+                listEl.innerHTML = `<p class="text-xs text-amber-800/80 bg-white/60 px-3 py-2 rounded-xl border border-amber-200/60">No tienes pagos programados. Toca <strong>+ Agregar</strong> para anotar tus tarjetas de crédito o cuotas de préstamos (ej. Visa 5 dic, Préstamo Cooperativa 15 dic).</p>`;
                 if (typeof lucide !== 'undefined') lucide.createIcons();
                 return;
             }
@@ -2496,6 +2540,7 @@ Devuelve un análisis práctico en español con:
             listEl.innerHTML = list.map(card => {
                 const target = new Date(card.dueDate + 'T00:00:00');
                 const diffDays = Math.round((target - today) / (1000 * 60 * 60 * 24));
+                const isLoan = card.kind === 'loan';
                 let badgeText = '';
                 let badgeColor = 'bg-amber-100 text-amber-900';
 
@@ -2515,7 +2560,8 @@ Devuelve un análisis práctico en español con:
                 return `
                     <div class="bg-white/95 p-2.5 sm:p-3 rounded-xl border border-amber-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                         <div class="min-w-0">
-                            <div class="flex items-center gap-2 flex-wrap">
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <span class="text-[10px] font-bold px-1.5 py-0.5 rounded-md ${isLoan ? 'bg-indigo-100 text-indigo-800' : 'bg-slate-100 text-slate-700'}">${isLoan ? 'Préstamo' : 'Tarjeta'}</span>
                                 <span class="text-xs font-bold text-slate-900">${escapeHTML(card.name)}</span>
                                 <span class="text-[10px] font-bold px-2 py-0.5 rounded-full ${badgeColor}">${badgeText}</span>
                             </div>
@@ -2523,9 +2569,9 @@ Devuelve un análisis práctico en español con:
                         </div>
                         <div class="flex items-center gap-1.5 self-end sm:self-center shrink-0">
                             <button type="button" onclick="markScheduledCardPaid('${card.id}')" class="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-[11px] font-bold rounded-lg transition-colors cursor-pointer">
-                                Ya la pagué
+                                Ya lo pagué
                             </button>
-                            <button type="button" onclick="openScheduledCardForm('${card.id}')" title="Editar tarjeta" class="p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors cursor-pointer">
+                            <button type="button" onclick="openScheduledCardForm('${card.id}')" title="Editar" class="p-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg transition-colors cursor-pointer">
                                 <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
                             </button>
                             <button type="button" onclick="removeScheduledCard('${card.id}')" title="Quitar" class="p-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 rounded-lg transition-colors cursor-pointer">
