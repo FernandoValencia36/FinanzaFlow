@@ -244,19 +244,71 @@
         <!-- ========================================== -->
         <div id="tab-view-movements" class="max-w-xl mx-auto w-full space-y-4">
             
-            <!-- Barra Compacta de Liquidez Real vs Deuda Tarjetas -->
-            <div class="grid grid-cols-3 gap-2 sm:gap-4 bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-2xs">
-                <div class="border-r border-slate-100 pr-2">
-                    <span class="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-400">Liquidez Real</span>
-                    <span id="mini-balance" class="text-sm sm:text-xl font-extrabold text-slate-900 truncate block">$0.00</span>
+            <!-- Barra Compacta de 4 Indicadores Clave para el Usuario -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 bg-white p-3.5 sm:p-4 rounded-2xl border border-slate-200/80 shadow-2xs">
+                <div class="border-b sm:border-b-0 sm:border-r border-slate-100 pb-2 sm:pb-0 pr-2">
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Liquidez Real</span>
+                    <span id="mini-balance" class="text-base sm:text-lg font-extrabold text-slate-900 truncate block">$0.00</span>
                 </div>
-                <div class="border-r border-slate-100 px-2">
-                    <span class="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-amber-600">Deuda Tarjeta</span>
-                    <span id="mini-credit-debt" class="text-sm sm:text-xl font-extrabold text-amber-600 truncate block">$0.00</span>
+                <div class="border-b sm:border-b-0 sm:border-r border-slate-100 pb-2 sm:pb-0 sm:px-2">
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-emerald-600">Ingresos</span>
+                    <span id="mini-income" class="text-base sm:text-lg font-extrabold text-emerald-600 truncate block">$0.00</span>
                 </div>
-                <div class="pl-2">
-                    <span class="block text-[10px] sm:text-xs font-semibold uppercase tracking-wider text-slate-400">Ingresos</span>
-                    <span id="mini-income" class="text-sm sm:text-xl font-extrabold text-emerald-600 truncate block">$0.00</span>
+                <div class="sm:border-r border-slate-100 pt-1 sm:pt-0 sm:px-2">
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-rose-600">Egresos</span>
+                    <span id="mini-expense" class="text-base sm:text-lg font-extrabold text-rose-600 truncate block">$0.00</span>
+                </div>
+                <div class="pt-1 sm:pt-0 sm:pl-2">
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-amber-600">Deuda Tarjeta</span>
+                    <span id="mini-credit-debt" class="text-base sm:text-lg font-extrabold text-amber-600 truncate block">$0.00</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta Amigable: Próximo Pago de Tarjeta Programado (Obligación por pagar) -->
+            <div class="bg-amber-50/70 border border-amber-200/90 rounded-2xl p-3.5 sm:p-4">
+                <div id="upcoming-card-display" class="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+                    <div class="flex items-start gap-2.5">
+                        <div class="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center shrink-0 mt-0.5">
+                            <i data-lucide="calendar-clock" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-xs font-bold text-amber-950">Próximo Pago de Tarjeta</span>
+                                <span id="upcoming-countdown-badge" class="hidden text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-200/80 text-amber-900"></span>
+                            </div>
+                            <p id="upcoming-card-summary" class="text-xs text-amber-800/90 mt-0.5">Programa tu fecha límite (ej. 5 de diciembre) para tenerlo presente sin descontarlo aún de tu banco.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1.5 self-end sm:self-center shrink-0">
+                        <button type="button" id="btn-pay-scheduled-card" onclick="markScheduledCardPaid()" class="hidden px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-2xs transition-colors cursor-pointer">
+                            Ya lo pagué
+                        </button>
+                        <button type="button" onclick="toggleUpcomingCardEditor()" class="px-3 py-1.5 bg-white hover:bg-amber-100/70 text-amber-900 border border-amber-300/80 text-xs font-semibold rounded-xl transition-colors cursor-pointer">
+                            <span id="upcoming-edit-btn-text">Programar</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mini formulario desplegable para programar el pago pendiente -->
+                <div id="upcoming-card-editor" class="hidden mt-3 pt-3 border-t border-amber-200/80 grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-amber-900 mb-1">Monto a pagar ($)</label>
+                        <input type="text" id="scheduled-card-amount" inputmode="decimal" oninput="sanitizeDecimalInput(this)" placeholder="Ej. 320,00"
+                            class="w-full px-2.5 py-2 bg-white border border-amber-300 rounded-xl text-xs font-bold text-slate-900">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase text-amber-900 mb-1">Fecha límite de pago</label>
+                        <input type="date" id="scheduled-card-date"
+                            class="w-full px-2.5 py-2 bg-white border border-amber-300 rounded-xl text-xs font-semibold text-slate-900">
+                    </div>
+                    <div class="flex items-end gap-1.5">
+                        <button type="button" onclick="saveScheduledCardReminder()" class="flex-1 py-2 px-3 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl cursor-pointer">
+                            Guardar
+                        </button>
+                        <button type="button" onclick="clearScheduledCardReminder()" title="Quitar recordatorio" class="py-2 px-2.5 bg-white hover:bg-rose-50 text-rose-600 border border-amber-200 rounded-xl text-xs cursor-pointer">
+                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
@@ -894,6 +946,7 @@
         const STORAGE_KEY = 'finanzaflow_transactions_v2';
         const CATEGORIES_KEY = 'finanzaflow_categories_v2';
         const PIN_STORAGE_KEY = 'finanzaflow_pin_v2';
+        const SCHEDULED_CARD_KEY = 'finanzaflow_scheduled_card_v1';
 
         const DEFAULT_CATEGORIES = {
             expense: [
@@ -944,6 +997,7 @@
             loadData();
             setDefaultDateTime();
             populateCategoryDropdowns();
+            renderScheduledCardUI();
             renderApp();
             setupGlobalEvents();
             if (typeof lucide !== 'undefined') lucide.createIcons();
@@ -1542,6 +1596,8 @@
             if (miniDebtEl) miniDebtEl.textContent = formatCurrency(creditDebt);
             const miniIncomeEl = document.getElementById('mini-income');
             if (miniIncomeEl) miniIncomeEl.textContent = formatCurrency(totalIncome);
+            const miniExpenseEl = document.getElementById('mini-expense');
+            if (miniExpenseEl) miniExpenseEl.textContent = formatCurrency(totalConsumption);
 
             document.getElementById('kpi-income').textContent = formatCurrency(totalIncome);
             document.getElementById('kpi-income-count').textContent = `${incomeCount} ${incomeCount === 1 ? 'ingreso' : 'ingresos'}`;
@@ -2363,6 +2419,100 @@ Devuelve un análisis práctico en español con:
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+        }
+
+        // --- 8B. RECORDATORIO DE PAGO DE TARJETA PROGRAMADO ---
+        function toggleUpcomingCardEditor() {
+            const editor = document.getElementById('upcoming-card-editor');
+            editor.classList.toggle('hidden');
+            if (!editor.classList.contains('hidden')) {
+                const saved = JSON.parse(localStorage.getItem(SCHEDULED_CARD_KEY) || 'null');
+                if (saved) {
+                    document.getElementById('scheduled-card-amount').value = Number(saved.amount).toFixed(2).replace('.', ',');
+                    document.getElementById('scheduled-card-date').value = saved.dueDate || '';
+                } else {
+                    const dec5 = new Date().getFullYear() + '-12-05';
+                    document.getElementById('scheduled-card-date').value = dec5;
+                }
+            }
+        }
+
+        function saveScheduledCardReminder() {
+            const amt = parseDecimalAmount(document.getElementById('scheduled-card-amount').value);
+            const dueDate = document.getElementById('scheduled-card-date').value;
+            if (isNaN(amt) || amt <= 0 || !dueDate) {
+                showToast('Ingresa un monto válido y la fecha de pago', 'error');
+                return;
+            }
+            localStorage.setItem(SCHEDULED_CARD_KEY, JSON.stringify({ amount: amt, dueDate }));
+            document.getElementById('upcoming-card-editor').classList.add('hidden');
+            renderScheduledCardUI();
+            showToast('Recordatorio de pago programado (no afecta aún tu liquidez)', 'success');
+        }
+
+        function clearScheduledCardReminder() {
+            localStorage.removeItem(SCHEDULED_CARD_KEY);
+            document.getElementById('upcoming-card-editor').classList.add('hidden');
+            renderScheduledCardUI();
+            showToast('Recordatorio eliminado', 'info');
+        }
+
+        function markScheduledCardPaid() {
+            const saved = JSON.parse(localStorage.getItem(SCHEDULED_CARD_KEY) || 'null');
+            if (!saved) return;
+
+            const now = new Date();
+            now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+
+            transactions.unshift({
+                id: 'tx_' + Date.now() + '_card',
+                type: 'card_payment',
+                amount: Number(saved.amount),
+                description: 'Pago Tarjeta de Crédito (Programado)',
+                category: 'Pago Tarjeta de Crédito',
+                payment: 'Cuenta Bancaria',
+                date: now.toISOString().slice(0, 16),
+                note: `Vencimiento ${saved.dueDate}`
+            });
+
+            localStorage.removeItem(SCHEDULED_CARD_KEY);
+            saveToStorage();
+            renderScheduledCardUI();
+            renderApp();
+            showToast('Pago registrado: descontado de Liquidez Real y deuda reducida', 'success');
+        }
+
+        function renderScheduledCardUI() {
+            const saved = JSON.parse(localStorage.getItem(SCHEDULED_CARD_KEY) || 'null');
+            const summaryEl = document.getElementById('upcoming-card-summary');
+            const badgeEl = document.getElementById('upcoming-countdown-badge');
+            const payBtn = document.getElementById('btn-pay-scheduled-card');
+            const editBtnText = document.getElementById('upcoming-edit-btn-text');
+
+            if (!saved) {
+                summaryEl.textContent = 'Programa tu fecha límite (ej. 5 de diciembre) para tenerlo presente sin descontarlo aún de tu banco.';
+                badgeEl.classList.add('hidden');
+                payBtn.classList.add('hidden');
+                editBtnText.textContent = 'Programar';
+                return;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const target = new Date(saved.dueDate + 'T00:00:00');
+            const diffDays = Math.round((target - today) / (1000 * 60 * 60 * 24));
+
+            let countdownText = '';
+            if (diffDays < 0) countdownText = `Venció hace ${Math.abs(diffDays)} día(s)`;
+            else if (diffDays === 0) countdownText = 'Vence HOY';
+            else if (diffDays === 1) countdownText = 'Vence mañana';
+            else countdownText = `Faltan ${diffDays} días`;
+
+            badgeEl.textContent = countdownText;
+            badgeEl.classList.remove('hidden');
+            summaryEl.innerHTML = `Monto por pagar: <strong>${formatCurrency(saved.amount)}</strong> • Fecha límite: <strong>${saved.dueDate}</strong>`;
+            payBtn.classList.remove('hidden');
+            editBtnText.textContent = 'Editar';
         }
 
         // --- 9. UTILIDADES UI Y TOASTS ---
