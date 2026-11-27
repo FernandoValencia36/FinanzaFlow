@@ -1555,7 +1555,7 @@
             let expenseCount = 0;
             let liquidOutflows = 0;
             let creditCardCharges = 0;
-            let creditCardPayments = 0;
+            let creditCardPaymentsCurrentMonth = 0;
 
             txList.forEach(t => {
                 const amt = Number(t.amount || 0);
@@ -1563,9 +1563,12 @@
                     totalIncome += amt;
                     incomeCount++;
                 } else if (t.type === 'card_payment') {
-                    // Abono a tarjeta: sale del banco/efectivo y reduce deuda de tarjeta (no duplica consumo)
+                    // Siempre sale de la Liquidez Real (Banco/Efectivo)
                     liquidOutflows += amt;
-                    creditCardPayments += amt;
+                    // Solo rebaja Consumos TC Mes si es un abono directo a consumos del mes (no a deuda global programada previa)
+                    if (!t.isScheduledCardSettlement) {
+                        creditCardPaymentsCurrentMonth += amt;
+                    }
                 } else {
                     // Egreso / Consumo
                     totalConsumption += amt;
@@ -1579,7 +1582,7 @@
             });
 
             const liquidBalance = totalIncome - liquidOutflows;
-            const creditDebt = Math.max(0, creditCardCharges - creditCardPayments);
+            const creditDebt = Math.max(0, creditCardCharges - creditCardPaymentsCurrentMonth);
 
             const balanceEl = document.getElementById('kpi-balance');
             balanceEl.textContent = formatCurrency(liquidBalance);
@@ -1589,9 +1592,9 @@
             if (debtEl) debtEl.textContent = formatCurrency(creditDebt);
             const debtNoteEl = document.getElementById('kpi-credit-note');
             if (debtNoteEl) {
-                debtNoteEl.textContent = creditCardPayments > 0
-                    ? `Abonado: ${formatCurrency(creditCardPayments)}`
-                    : 'Acumulado por pagar';
+                debtNoteEl.textContent = creditCardPaymentsCurrentMonth > 0
+                    ? `Abonado al mes: ${formatCurrency(creditCardPaymentsCurrentMonth)}`
+                    : 'Nuevos consumos del mes';
             }
 
             const miniBalanceEl = document.getElementById('mini-balance');
@@ -2433,28 +2436,42 @@ Devuelve un análisis práctico en español con:
 
         function markScheduledCardPaid(cardId) {
             const list = getScheduledCards();
-            const card = list.find(c => c.id === cardId);
-            if (!card) return;
+            const cardIndex = list.findIndex(c => c.id === cardId);
+            if (cardIndex === -1) return;
 
+            const cardSnapshot = { ...list[cardIndex] };
             const now = new Date();
             now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+            const generatedTxId = 'tx_' + Date.now() + '_card';
 
             transactions.unshift({
-                id: 'tx_' + Date.now() + '_card',
+                id: generatedTxId,
                 type: 'card_payment',
-                amount: Number(card.amount),
-                description: `Pago ${card.name}`,
+                amount: Number(cardSnapshot.amount),
+                description: `Pago ${cardSnapshot.name}`,
                 category: 'Pago Tarjeta de Crédito',
                 payment: 'Cuenta Bancaria',
                 date: now.toISOString().slice(0, 16),
-                note: `Vencimiento ${card.dueDate}`
+                note: `Vencimiento ${cardSnapshot.dueDate}`,
+                isScheduledCardSettlement: true
             });
 
             saveScheduledCardsList(list.filter(c => c.id !== cardId));
             saveToStorage();
             renderScheduledCardUI();
             renderApp();
-            showToast(`Pago de ${card.name} registrado y descontado de Liquidez Real`, 'success');
+
+            showToast(`Pago de ${cardSnapshot.name} registrado`, 'success', () => {
+                // Deshacer: eliminar la transacción creada y restaurar la tarjeta programada
+                transactions = transactions.filter(t => t.id !== generatedTxId);
+                const restoredList = getScheduledCards();
+                restoredList.push(cardSnapshot);
+                saveScheduledCardsList(restoredList);
+                saveToStorage();
+                renderScheduledCardUI();
+                renderApp();
+                showToast(`Se deshizo el pago de ${cardSnapshot.name}`, 'info');
+            });
         }
 
         function renderScheduledCardUI() {
