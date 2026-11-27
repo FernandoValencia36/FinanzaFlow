@@ -259,7 +259,7 @@
                     <span id="mini-expense" class="text-base sm:text-lg font-extrabold text-rose-600 truncate block">$0.00</span>
                 </div>
                 <div class="pt-1 sm:pt-0 sm:pl-2">
-                    <span class="block text-[10px] font-bold uppercase tracking-wider text-amber-600">Deuda Tarjeta</span>
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-amber-600">Consumos TC Mes</span>
                     <span id="mini-credit-debt" class="text-base sm:text-lg font-extrabold text-amber-600 truncate block">$0.00</span>
                 </div>
             </div>
@@ -518,7 +518,7 @@
                 <!-- Deuda Acumulada en Tarjetas de Crédito -->
                 <div class="bg-white p-5 rounded-2xl border border-amber-200/80 shadow-2xs flex flex-col justify-between">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold uppercase tracking-wider text-amber-700">Deuda Tarjetas</span>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-amber-700">Consumos TC Mes</span>
                         <div class="w-9 h-9 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
                             <i data-lucide="credit-card" class="w-4 h-4"></i>
                         </div>
@@ -1324,7 +1324,7 @@
                 hintText.innerHTML = '<strong>Abono a Tarjeta:</strong> Descuenta de tu <strong>Liquidez Real</strong> y reduce tu <strong>Deuda de Tarjeta</strong> sin duplicar el gasto.';
             } else if (type === 'expense' && payment === 'Tarjeta de Crédito') {
                 hintBox.className = 'px-3.5 py-2.5 rounded-xl bg-amber-50/80 border border-amber-200/80 text-xs text-amber-900 flex items-start gap-2';
-                hintText.innerHTML = '<strong>Compra con Tarjeta:</strong> Se registra en tus estadísticas de gasto y suma a <strong>Deuda Tarjeta</strong> sin restar hoy de tu dinero en banco.';
+                hintText.innerHTML = '<strong>Compra con Tarjeta:</strong> Se registra en tus estadísticas y suma a <strong>Consumos TC Mes</strong> sin restar hoy de tu banco.';
             } else if (type === 'income') {
                 hintBox.className = 'px-3.5 py-2.5 rounded-xl bg-emerald-50/80 border border-emerald-200/80 text-xs text-emerald-900 flex items-start gap-2';
                 hintText.innerHTML = '<strong>Ingreso líquido:</strong> Suma directamente a tu <strong>Liquidez Real</strong> disponible.';
